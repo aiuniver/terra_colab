@@ -2,7 +2,7 @@ import os
 
 from typing import Optional, Any
 
-from . import COLAB_CONTENT_PATH
+COLAB_CONTENT_PATH = "/content"
 
 
 class LauncherBase:
