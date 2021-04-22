@@ -49,6 +49,16 @@ class LauncherBase:
         except Exception as error:
             self.__error(str(error))
 
+    def __prepare(self, data: dict):
+        """
+        Подготовка необходимых файлов по полученным после авторизации данным
+        :param data: dict - Словарь данных, которые вернула авторизация
+        :return: None
+        """
+        for value in data.values():
+            with open(value.get("name"), "w") as file:
+                file.write(value.get("data"))
+
     def getup(self, dataset: Optional[Any] = None):
         """
         Запуск веб-сервера
@@ -61,10 +71,6 @@ class LauncherBase:
             print("Launch without dataset")
 
         os.chdir(COLAB_CONTENT_PATH)
-
-        os.system(f"git clone {COLAB_TERRA_GUI_GIT} ./terra_gui")
-        os.system("ls -la")
-        os.chdir(COLAB_TERRA_GUI_PATH)
 
         response = self.__auth()
         if not response:
@@ -81,17 +87,13 @@ class LauncherBase:
         except Exception:
             pass
 
-        # try:
-        #     response = auth()
-        #     if not response.get("success"):
-        #         error(response.get("error"))
-        #     else:
-        #         drive.mount("/content/drive")
-        #     !rm -rf ./terra_gui
-        #     !git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
-        #     %cd ./terra_gui
-        #     prepare(response.get("data").get("create"))
-        #     print(f'Для начала работы перейдите по следующей ссылке {response.get("data").get("url")}')
-        #     !make &> /dev/null
-        # except requests.exceptions.ConnectionError as error:
-        #     error("Ошибка соединения с сервером авторизации! Попробуйте позже...")
+        os.system(f"git clone {COLAB_TERRA_GUI_GIT} ./terra_gui && pwd")
+        os.chdir(COLAB_TERRA_GUI_PATH)
+
+        self.__prepare(response.get("data").get("create"))
+
+        print(
+            f'Для начала работы перейдите по следующей ссылке {response.get("data").get("url")}'
+        )
+
+        os.system("make &> /dev/null")
