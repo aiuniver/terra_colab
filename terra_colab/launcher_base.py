@@ -41,7 +41,8 @@ class LauncherBase:
                 data={"email": email, "user_token": token},
             )
             response.raise_for_status()
-        except requests.exceptions.HTTPError as error:
+            print(response.json())
+        except Exception as error:
             self.__error(str(error))
 
     def getup(self, dataset: Optional[Any] = None):
