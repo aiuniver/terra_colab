@@ -1,10 +1,11 @@
 import os
 import requests
 
+from google.colab import drive
 from typing import Optional, Any
 
 COLAB_CONTENT_PATH = "/content"
-COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/logisn/"
+COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
 
 
 class LauncherBase:
@@ -20,7 +21,7 @@ class LauncherBase:
         """
         print(f"\033[0;31m{message}\033[0m")
 
-    def __auth(self) -> dict:
+    def __auth(self) -> Optional[dict]:
         """
         Авторизация пользователя на стороне сервера terra_ai
         :return: dict
@@ -41,7 +42,7 @@ class LauncherBase:
                 data={"email": email, "user_token": token},
             )
             response.raise_for_status()
-            print(response.json())
+            return response.json()
         except Exception as error:
             self.__error(str(error))
 
@@ -59,7 +60,15 @@ class LauncherBase:
         os.chdir(COLAB_CONTENT_PATH)
 
         response = self.__auth()
+        if not response:
+            return
+
+        if not response.get("success"):
+            self.__error(response.get("error"))
+            return
+
         print(response)
+        drive.mount(f"{COLAB_CONTENT_PATH}/drive")
         # try:
         #     response = auth()
         #     if not response.get("success"):
