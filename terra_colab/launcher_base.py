@@ -81,6 +81,7 @@ class LauncherBase:
             self.__error(response.get("error"))
             return
 
+        print(response)
         drive.mount(f"{COLAB_CONTENT_PATH}/drive")
 
         try:
@@ -100,5 +101,17 @@ class LauncherBase:
             f'Для начала работы перейдите по следующей ссылке {response.get("data").get("url")}'
         )
 
-        make = subprocess.Popen(["make"])
-        make.wait()
+        pip_install = subprocess.Popen(
+            ["pip", "install", "-r", "./requirements/colab.txt"]
+        )
+        print("pip_install:", pip_install)
+        pip_install.wait()
+
+        # pip_install = subprocess.Popen(["chmod", "400", "$(RSA_KEY)"])
+        # print("pip_install:", pip_install)
+        # pip_install.wait()
+
+        """
+chmod +x ./manage.py
+./manage.py runserver 80 & ssh -i './$(RSA_KEY)' -o StrictHostKeyChecking=no -R $(PORT):localhost:80 $(TUNNEL_USER)
+        """
