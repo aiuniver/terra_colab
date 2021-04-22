@@ -62,8 +62,11 @@ class LauncherBase:
 
         os.chdir(COLAB_CONTENT_PATH)
 
+        print(COLAB_TERRA_GUI_PATH)
         os.system(f"git clone {COLAB_TERRA_GUI_GIT} ./terra_gui &> /dev/null")
+        print(os.path.isdir(COLAB_TERRA_GUI_PATH))
         os.chdir(COLAB_TERRA_GUI_PATH)
+        print("---------------")
 
         response = self.__auth()
         if not response:
