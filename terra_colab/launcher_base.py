@@ -8,7 +8,7 @@ from typing import Optional, Any
 COLAB_CONTENT_PATH = "/content"
 COLAB_TERRA_GUI_PATH = f"{COLAB_CONTENT_PATH}/terra_gui"
 COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
-COLAB_TERRA_GUI_GIT = "https://github.com/aiuniver/terra_gui.git./terra_gui"
+COLAB_TERRA_GUI_GIT = "https://github.com/aiuniver/terra_gui.git"
 
 
 class LauncherBase:
@@ -62,9 +62,7 @@ class LauncherBase:
 
         os.chdir(COLAB_CONTENT_PATH)
 
-        git_string = f"git clone {COLAB_TERRA_GUI_GIT} &> /dev/null"
-        print(git_string)
-        os.system(git_string)
+        os.system(f"git clone {COLAB_TERRA_GUI_GIT} ./terra_gui &> /dev/null")
         os.chdir(COLAB_TERRA_GUI_PATH)
 
         response = self.__auth()
