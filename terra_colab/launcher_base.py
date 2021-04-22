@@ -40,10 +40,7 @@ class LauncherBase:
                 COLAB_AUTH_URL,
                 data={"email": email, "user_token": token},
             )
-            print(response.ok)
-            print(dir(response))
-            print(response)
-            return response.json()
+            response.raise_for_status()
         except requests.exceptions.HTTPError as error:
             self.__error(str(error))
 
