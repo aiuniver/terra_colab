@@ -4,7 +4,7 @@ import requests
 from typing import Optional, Any
 
 COLAB_CONTENT_PATH = "/content"
-COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
+COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/logisn/"
 
 
 class LauncherBase:
