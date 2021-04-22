@@ -1,4 +1,5 @@
 import os
+import sys
 
 from typing import Optional, Any
 
@@ -27,6 +28,7 @@ class LauncherBase:
         def __input(title: str) -> str:
             value = input(title)
             if not value:
+                sys.stdout.write("\033[F")
                 self.__error("Введите значение")
                 return __input(title=title)
             return value
