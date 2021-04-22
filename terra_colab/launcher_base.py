@@ -29,6 +29,7 @@ class LauncherBase:
             value = input(title)
             if not value:
                 sys.stdout.write("\033[F")
+                sys.stdout.write("\033[K")
                 self.__error("Введите значение")
                 return __input(title=title)
             return value
