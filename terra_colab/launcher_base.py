@@ -10,6 +10,14 @@ class LauncherBase:
     Класс для управления запуском веб-сервера
     """
 
+    def __error(self, message: str):
+        """
+        Вывод ошибки пользователю
+        :param message: str - Строка ошибки
+        :return: None
+        """
+        print(f"\033[0;31m{message}\033[0m")
+
     def __auth(self) -> dict:
         """
         Авторизация пользователя на стороне сервера terra_ai
@@ -19,7 +27,7 @@ class LauncherBase:
         def __input(title: str) -> str:
             value = input(title)
             if not value:
-                raise ValueError("Введите значение")
+                self.__error("Введите значение")
                 return __input(title=title)
             return value
 
