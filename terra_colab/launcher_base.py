@@ -5,4 +5,4 @@ class LauncherBase:
         if dataset:
             print("Dataset is undefined")
         else:
-            print("Dataset loaded:", dataset)
+            print("Dataset loaded:", dataset, type(dataset))
