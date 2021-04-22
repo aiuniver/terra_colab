@@ -62,6 +62,11 @@ class LauncherBase:
 
         os.chdir(COLAB_CONTENT_PATH)
 
+        git_string = f"git clone {COLAB_TERRA_GUI_GIT} &> /dev/null"
+        print(git_string)
+        os.system(git_string)
+        os.chdir(COLAB_TERRA_GUI_PATH)
+
         response = self.__auth()
         if not response:
             return
@@ -76,9 +81,6 @@ class LauncherBase:
             shutil.rmtree(COLAB_TERRA_GUI_PATH)
         except Exception:
             pass
-
-        os.system(f"git clone {COLAB_TERRA_GUI_GIT} &> /dev/null")
-        os.chdir(COLAB_TERRA_GUI_PATH)
 
         # try:
         #     response = auth()
