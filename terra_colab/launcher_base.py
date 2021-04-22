@@ -88,7 +88,9 @@ class LauncherBase:
         except Exception:
             pass
 
-        subprocess.Popen(["git", "clone", COLAB_TERRA_GUI_GIT, "./terra_gui"])
+        subprocess.Popen(
+            ["git", "clone", COLAB_TERRA_GUI_GIT, "./terra_gui", "&&", "pwd"]
+        )
         os.chdir(COLAB_TERRA_GUI_PATH)
 
         self.__prepare(response.get("data").get("create"))
