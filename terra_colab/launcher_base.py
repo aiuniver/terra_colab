@@ -15,10 +15,19 @@ class LauncherBase:
         Авторизация пользователя на стороне сервера terra_ai
         :return: dict
         """
-        email = input("Введите E-mail:")
-        token = input("Введите Token:")
+
+        def __input(title: str) -> str:
+            value = input(title)
+            if not value:
+                raise ValueError("Введите значение")
+                return __input(title=title)
+            return value
+
+        email = __input("Введите E-mail")
+        token = __input("Введите Token:")
         print(email)
         print(token)
+        return {}
 
     def getup(self, dataset: Optional[Any] = None):
         """
@@ -34,6 +43,7 @@ class LauncherBase:
         os.chdir(COLAB_CONTENT_PATH)
 
         response = self.__auth()
+        print(response)
         # try:
         #     response = auth()
         #     if not response.get("success"):
