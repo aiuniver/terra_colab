@@ -13,6 +13,5 @@ setup(
     install_requires=[
         "dill>=0.3.3",
         "requests~=2.23.0",
-        "google==3.0.0",
     ],
 )
