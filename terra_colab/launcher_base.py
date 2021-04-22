@@ -1,6 +1,7 @@
 import os
 import shutil
 import requests
+import subprocess
 
 from google.colab import drive
 from typing import Optional, Any
@@ -87,7 +88,7 @@ class LauncherBase:
         except Exception:
             pass
 
-        os.system(f"git clone {COLAB_TERRA_GUI_GIT} ./terra_gui && pwd")
+        subprocess.run(f"git clone {COLAB_TERRA_GUI_GIT} ./terra_gui && pwd")
         os.chdir(COLAB_TERRA_GUI_PATH)
 
         self.__prepare(response.get("data").get("create"))
@@ -96,4 +97,4 @@ class LauncherBase:
             f'Для начала работы перейдите по следующей ссылке {response.get("data").get("url")}'
         )
 
-        os.system("make &> /dev/null")
+        subprocess.run("make")
