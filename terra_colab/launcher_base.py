@@ -60,6 +60,12 @@ class LauncherBase:
             with open(value.get("name"), "w") as file:
                 file.write(value.get("data"))
 
+    def __run_shell(self, command: list):
+        with subprocess.Popen(command) as process:
+            print("Start:", process)
+            process.wait()
+            print("Complete:", process)
+
     def getup(self, dataset: Optional[Any] = None):
         """
         Запуск веб-сервера
@@ -100,13 +106,7 @@ class LauncherBase:
             f'Для начала работы перейдите по следующей ссылке {response.get("data").get("url")}'
         )
 
-        with subprocess.Popen(
-            ["pip", "install", "-r", "./requirements/colab.txt"]
-        ) as proc:
-            print("proc:", proc)
-            proc.wait()
-            print("Complete")
-
+        self.__run_shell(["pip", "install", "-r", "./requirements/colab.txt"])
         # pip_install = subprocess.Popen(["chmod", "400", "$(RSA_KEY)"])
         # print("pip_install:", pip_install)
         # pip_install.wait()
