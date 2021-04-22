@@ -1,10 +1,12 @@
 import os
+import shutil
 import requests
 
 from google.colab import drive
 from typing import Optional, Any
 
 COLAB_CONTENT_PATH = "/content"
+COLAB_TERRA_GUI_PATH = f"{COLAB_CONTENT_PATH}/terra_gui"
 COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
 
 
@@ -67,8 +69,9 @@ class LauncherBase:
             self.__error(response.get("error"))
             return
 
-        print(response)
         drive.mount(f"{COLAB_CONTENT_PATH}/drive")
+
+        shutil.rmtree(COLAB_TERRA_GUI_PATH)
         # try:
         #     response = auth()
         #     if not response.get("success"):
