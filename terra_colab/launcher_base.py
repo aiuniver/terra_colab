@@ -1,13 +1,12 @@
-from typing import Optional, Any
+import sys
 
 
 class LauncherBase:
-    dataset: Optional[Any] = None
-
     def getup(self):
-        print(dir(self))
-        print(self.dataset)
-        print(type(self.dataset))
+        print(sys.path)
+        sys.path.append("./")
+        print(sys.path)
+        print(globals().keys())
         # print(f'Launcher getup with dataset "{dataset}[type={type(dataset)}]"')
         # dataset = globals().get(dataset, None)
         # if dataset:
