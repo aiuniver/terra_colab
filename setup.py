@@ -12,5 +12,6 @@ setup(
     long_description=open(join(dirname(__file__), "README.md")).read(),
     install_requires=[
         "dill==0.3.3",
+        "requests==2.25.1",
     ],
 )

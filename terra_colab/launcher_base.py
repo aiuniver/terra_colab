@@ -1,14 +1,24 @@
 import os
+import requests
 
 from typing import Optional, Any
 
 COLAB_CONTENT_PATH = "/content"
+COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
 
 
 class LauncherBase:
     """
     Класс для управления запуском веб-сервера
     """
+
+    def __error(self, message: str):
+        """
+        Вывод ошибки пользователю
+        :param message: str - Строка ошибки
+        :return: None
+        """
+        print(f"\033[0;31m{message}\033[0m")
 
     def __auth(self) -> dict:
         """
@@ -24,9 +34,16 @@ class LauncherBase:
 
         email = __input("Введите E-mail: ")
         token = __input("Введите Token: ")
-        print(email)
-        print(token)
-        return {}
+
+        response = requests.post(
+            COLAB_AUTH_URL,
+            data={"email": email, "user_token": token},
+        )
+        print(response.content)
+        print(response.json())
+        print(response.ok)
+        print(response)
+        return response.json()
 
     def getup(self, dataset: Optional[Any] = None):
         """
