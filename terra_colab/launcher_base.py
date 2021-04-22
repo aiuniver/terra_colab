@@ -1,4 +1,3 @@
-from os import chdir
 from typing import Optional, Any
 
 
@@ -8,6 +7,3 @@ class LauncherBase:
             print(f'Launch with dataset "{dataset} -> {type(dataset)}"')
         else:
             print("Launch without dataset")
-
-        chdir
-        %cd / content
