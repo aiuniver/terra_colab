@@ -81,7 +81,6 @@ class LauncherBase:
             self.__error(response.get("error"))
             return
 
-        print(response)
         drive.mount(f"{COLAB_CONTENT_PATH}/drive")
 
         try:
@@ -105,7 +104,6 @@ class LauncherBase:
             ["pip", "install", "-r", "./requirements/colab.txt"]
         ) as proc:
             print("proc:", proc)
-            print(proc.stdout.read())
             proc.wait()
             print("Complete")
 
