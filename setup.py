@@ -13,5 +13,15 @@ setup(
     install_requires=[
         "dill>=0.3.3",
         "requests~=2.23.0",
+        "folium==0.2.1",
+    ],
+    entry_points={
+        "console_scripts": [
+            "terra_colab_auth = terra_colab.commands:auth",
+            "terra_colab_gdmount = terra_colab.commands:gdmount",
+        ]
+    },
+    scripts=[
+        "scripts/terra_colab_web",
     ],
 )
