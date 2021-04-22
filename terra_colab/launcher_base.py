@@ -39,9 +39,8 @@ class LauncherBase:
             COLAB_AUTH_URL,
             data={"email": email, "user_token": token},
         )
-        print(response.content)
-        print(response.json())
         print(response.ok)
+        print(dir(response))
         print(response)
         return response.json()
 
