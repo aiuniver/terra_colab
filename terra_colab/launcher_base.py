@@ -2,7 +2,5 @@ from typing import Optional, Any
 
 
 class LauncherBase:
-    dataset: Optional[Any] = None
-
-    def getup(self):
-        print("Launcher getup")
+    def getup(self, dataset: Optional[Any] = None):
+        print(f'Launcher getup with dataset "{dataset} -> {type(dataset)}"')
