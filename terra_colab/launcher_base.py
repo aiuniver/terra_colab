@@ -101,11 +101,13 @@ class LauncherBase:
             f'Для начала работы перейдите по следующей ссылке {response.get("data").get("url")}'
         )
 
-        pip_install = subprocess.Popen(
+        with subprocess.Popen(
             ["pip", "install", "-r", "./requirements/colab.txt"]
-        )
-        print("pip_install:", pip_install)
-        pip_install.wait()
+        ) as proc:
+            print("proc:", proc)
+            print(proc.stdout.read())
+            proc.wait()
+            print("Complete")
 
         # pip_install = subprocess.Popen(["chmod", "400", "$(RSA_KEY)"])
         # print("pip_install:", pip_install)
