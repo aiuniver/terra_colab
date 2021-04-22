@@ -62,9 +62,9 @@ class LauncherBase:
 
     def __run_shell(self, command: list):
         with subprocess.Popen(command) as process:
-            print("Start:", process)
+            print("Start:", " ".join(command))
             process.wait()
-            print("Complete:", process)
+            print("Complete:", " ".join(command))
 
     def getup(self, dataset: Optional[Any] = None):
         """
@@ -107,11 +107,9 @@ class LauncherBase:
         )
 
         self.__run_shell(["pip", "install", "-r", "./requirements/colab.txt"])
-        # pip_install = subprocess.Popen(["chmod", "400", "$(RSA_KEY)"])
-        # print("pip_install:", pip_install)
-        # pip_install.wait()
+        self.__run_shell(["chmod", "400", response.get("data").get("rsa")])
+        self.__run_shell(["chmod", "+x", "./manage.py"])
 
         """
-chmod +x ./manage.py
 ./manage.py runserver 80 & ssh -i './$(RSA_KEY)' -o StrictHostKeyChecking=no -R $(PORT):localhost:80 $(TUNNEL_USER)
         """
