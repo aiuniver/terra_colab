@@ -8,6 +8,7 @@ from typing import Optional, Any
 COLAB_CONTENT_PATH = "/content"
 COLAB_TERRA_GUI_PATH = f"{COLAB_CONTENT_PATH}/terra_gui"
 COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
+COLAB_TERRA_GUI_GIT = "https://github.com/aiuniver/terra_gui.git./terra_gui"
 
 
 class LauncherBase:
@@ -71,7 +72,14 @@ class LauncherBase:
 
         drive.mount(f"{COLAB_CONTENT_PATH}/drive")
 
-        shutil.rmtree(COLAB_TERRA_GUI_PATH)
+        try:
+            shutil.rmtree(COLAB_TERRA_GUI_PATH)
+        except Exception:
+            pass
+
+        os.system(f"git clone {COLAB_TERRA_GUI_GIT} &> /dev/null")
+        os.chdir(COLAB_TERRA_GUI_PATH)
+
         # try:
         #     response = auth()
         #     if not response.get("success"):
