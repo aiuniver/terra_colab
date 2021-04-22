@@ -10,7 +10,4 @@ setup(
     version=__version__,
     packages=find_packages(),
     long_description=open(join(dirname(__file__), "README.md")).read(),
-    entry_points={
-        "console_scripts": ["terra_colab_web_launch = terra_colab.commands:getup"]
-    },
 )
