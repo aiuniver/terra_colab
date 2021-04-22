@@ -22,8 +22,8 @@ class LauncherBase:
                 return __input(title=title)
             return value
 
-        email = __input("Введите E-mail")
-        token = __input("Введите Token:")
+        email = __input("Введите E-mail: ")
+        token = __input("Введите Token: ")
         print(email)
         print(token)
         return {}
