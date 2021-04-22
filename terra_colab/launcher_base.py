@@ -26,7 +26,7 @@ class LauncherBase:
         :return: dict
         """
 
-        def __input(title: str) -> str:
+        def __input(title: str) -> Optional[str]:
             value = input(title)
             if not value:
                 return __input(title=title)
@@ -35,14 +35,17 @@ class LauncherBase:
         email = __input("Введите E-mail: ")
         token = __input("Введите Token: ")
 
-        response = requests.post(
-            COLAB_AUTH_URL,
-            data={"email": email, "user_token": token},
-        )
-        print(response.ok)
-        print(dir(response))
-        print(response)
-        return response.json()
+        try:
+            response = requests.post(
+                COLAB_AUTH_URL,
+                data={"email": email, "user_token": token},
+            )
+            print(response.ok)
+            print(dir(response))
+            print(response)
+            return response.json()
+        except requests.exceptions.HTTPError as error:
+            self.__error(str(error))
 
     def getup(self, dataset: Optional[Any] = None):
         """
