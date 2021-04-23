@@ -12,6 +12,10 @@ COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
 COLAB_TERRA_GUI_GIT = "https://github.com/aiuniver/terra_gui.git"
 
 
+def print_globals_keys():
+    print(globals().keys())
+
+
 class LauncherBase:
     """
     Класс для управления запуском веб-сервера

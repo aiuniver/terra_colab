@@ -4,3 +4,7 @@ __version__ = "0.1"
 
 
 launcher = LauncherBase()
+
+
+def print_globals_keys():
+    print(globals().keys())
