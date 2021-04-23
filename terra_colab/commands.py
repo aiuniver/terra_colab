@@ -1,6 +1,7 @@
 import requests
 
 from argparse import ArgumentParser
+from google.colab import drive
 
 
 def auth():
@@ -27,3 +28,7 @@ def auth():
     for name, info in files.items():
         with open(info.get("name"), "w") as file:
             file.write(info.get("data"))
+
+
+def gdmount():
+    drive.mount("/content/drive")
