@@ -42,15 +42,15 @@ while [ "$1" != "" ]; do
   shift
 done
 
+rm -rf $TERRA_GUI_PATH
+git clone https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH
+cd $TERRA_GUI_PATH || exit
+
 read -p "Введите E-mail: " EMAIL
 read -p "Введите Token: " TOKEN
 
 RESPONSE=$(terra_colab_auth --email=$EMAIL --token=$TOKEN --url=$AUTH_URL)
 if [ -z "$RESPONSE" ]; then
-  rm -rf $TERRA_GUI_PATH
-  git clone https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH
-  cd $TERRA_GUI_PATH || exit
-  pwd
   make
 else
   echo $RESPONSE
