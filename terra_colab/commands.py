@@ -5,3 +5,4 @@ def web():
     print("WEB")
     launcher = Launcher()
     print(launcher)
+    print(globals().keys())
