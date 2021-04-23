@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TERRA_GUI_PATH=$CONTENT_PATH/terra_gui
+TERRA_GUI_PATH=/content/terra_gui
 AUTH_URL=http://terra.neural-university.ru/api/v1/login/
 
 red=$(tput setaf 1)
