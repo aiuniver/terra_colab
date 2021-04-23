@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-export CONTENT_PATH=/content
-export TERRA_GUI_PATH=$CONTENT_PATH/terra_gui
-export DATASET
-export EMAIL
-export TOKEN
+CONTENT_PATH=/content
+TERRA_GUI_PATH=$CONTENT_PATH/terra_gui
+AUTH_URL=http://terra.neural-university.ru/api/v1/login/
 
 red=$(tput setaf 1)
 reset=$(tput sgr0)
@@ -45,11 +43,17 @@ while [ "$1" != "" ]; do
     shift
 done
 
-rm -rf $TERRA_GUI_PATH
-git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
-cd $TERRA_GUI_PATH || exit
-pip install -r ./requirements/colab.txt
-./manage.py runserver 127.0.0.1:80
+read -p "Введите E-mail: " EMAIL
+read -p "Введите Token: " TOKEN
+
+RESPONSE=$(curl -sS -X POST -H "Content-Type: application/json" -d '{"email":"'$EMAIL'","user_token":"'$TOKEN'"}' $AUTH_URL)
+echo $RESPONSE
+
+#rm -rf $TERRA_GUI_PATH
+#git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
+#cd $TERRA_GUI_PATH || exit
+#pip install -r ./requirements/colab.txt
+#./manage.py runserver 127.0.0.1:80
 
 
 #cd $CONTENT_PATH
