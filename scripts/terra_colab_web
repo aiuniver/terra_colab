@@ -3,6 +3,8 @@
 export CONTENT_PATH=/content
 export TERRA_GUI_PATH=$CONTENT_PATH/terra_gui
 export DATASET
+export EMAIL
+export TOKEN
 
 red=$(tput setaf 1)
 reset=$(tput sgr0)
