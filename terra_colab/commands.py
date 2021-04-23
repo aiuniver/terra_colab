@@ -7,6 +7,12 @@ from .launcher import launcher
 def auth():
     email = input("Введите E-mail: ")
     token = input("Введите Token: ")
+    print(
+        f"""
+        export EMAIL={email}
+        export TOKEN={token}
+    """
+    )
     os.system(
         f"""
         export EMAIL={email}
