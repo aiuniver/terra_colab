@@ -14,7 +14,7 @@ from . import (
 )
 
 
-class LauncherBase:
+class Launcher:
     """
     Класс для управления запуском веб-сервера
     """
@@ -130,6 +130,3 @@ class LauncherBase:
                 response.get("data").get("user"),
             ]
         )
-
-
-LauncherBase()
