@@ -17,7 +17,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "terra_colab_auth = terra_colab.commands:auth2shell",
+            "terra_colab_auth = terra_colab.commands:auth",
+            "terra_colab_gdmount = terra_colab.commands:gdmount",
         ]
     },
     scripts=[
