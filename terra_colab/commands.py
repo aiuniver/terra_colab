@@ -1,5 +1,6 @@
 # from google.colab import drive
 import os
+import subprocess
 
 from .launcher import launcher
 
@@ -7,18 +8,7 @@ from .launcher import launcher
 def auth():
     email = input("Введите E-mail: ")
     token = input("Введите Token: ")
-    print(
-        f"""
-        EMAIL={email}
-        TOKEN={token}
-    """
-    )
-    os.system(
-        f"""
-        EMAIL={email}
-        TOKEN={token}
-    """
-    )
+    subprocess.call(f"EMAIL={email}; TOKEN={token}")
     # drive.mount("/content/drive")
     # launcher.auth()
     # launcher = Launcher()
