@@ -45,9 +45,9 @@ done
 
 cd $CONTENT_PATH
 
-pip install -r requirements/colab.txt
 rm -rf $TERRA_GUI_PATH
 git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
+pip install -r ./requirements/colab.txt
 cd $TERRA_GUI_PATH
 ./manage.py runserver 127.0.0.1:80
 
