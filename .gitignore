@@ -128,5 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-Makefile
-rsa.key
+/Makefile
+/rsa.key
+/terra_gui/
