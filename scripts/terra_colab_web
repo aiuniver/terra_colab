@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-CONTENT_PATH=/content
+export CONTENT_PATH=/content
 
 
-cd $(CONTENT_PATH)
+cd $CONTENT_PATH
 ls -la
 
 #pip install -r ./requirements/colab.txt
