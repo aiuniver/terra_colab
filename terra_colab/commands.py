@@ -9,14 +9,14 @@ def auth():
     token = input("Введите Token: ")
     print(
         f"""
-        export EMAIL={email}
-        export TOKEN={token}
+        EMAIL={email}
+        TOKEN={token}
     """
     )
     os.system(
         f"""
-        export EMAIL={email}
-        export TOKEN={token}
+        EMAIL={email}
+        TOKEN={token}
     """
     )
     # drive.mount("/content/drive")
