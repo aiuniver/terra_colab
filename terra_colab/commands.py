@@ -29,7 +29,9 @@ def auth():
         with open(info.get("name"), "w") as file:
             file.write(info.get("data"))
 
-    return data
+    return (
+        f'Для начала работы перейдите по следующей ссылке {data.get("data").get("url")}'
+    )
 
 
 def gdmount():
