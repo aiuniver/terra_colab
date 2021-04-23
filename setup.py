@@ -14,6 +14,6 @@ setup(
         "dill>=0.3.3",
         "requests~=2.23.0",
     ],
-    entry_points={"console_scripts": ["terra_colab_web = terra_colab.commands:web"]},
-    scripts=["scripts/web"],
+    # entry_points={"console_scripts": ["terra_colab_web = terra_colab.commands:web"]},
+    scripts=["scripts/terra_colab_web"],
 )
