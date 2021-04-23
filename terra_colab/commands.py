@@ -1,8 +1,8 @@
-from .launcher import Launcher
+from .launcher import launcher
 
 
-def web():
-    print("WEB")
-    launcher = Launcher()
-    print(launcher)
+def auth2shell():
+    launcher.auth()
+    # launcher = Launcher()
+    # print(launcher)
     print(globals().keys())

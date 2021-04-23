@@ -3,7 +3,7 @@ import shutil
 import requests
 import subprocess
 
-from google.colab import drive
+# from google.colab import drive
 from typing import Optional, Any
 
 from . import (
@@ -30,7 +30,23 @@ class Launcher:
         """
         print(f"\033[0;31m{message}\033[0m")
 
-    def __auth(self) -> Optional[dict]:
+    def __prepare(self, data: dict):
+        """
+        Подготовка необходимых файлов по полученным после авторизации данным
+        :param data: dict - Словарь данных, которые вернула авторизация
+        :return: None
+        """
+        for value in data.values():
+            with open(value.get("name"), "w") as file:
+                file.write(value.get("data"))
+
+    def __run_shell(self, command: list):
+        with subprocess.Popen(command) as process:
+            print("Start:", " ".join(command))
+            process.wait()
+            print("!", " ".join(command))
+
+    def auth(self) -> Optional[dict]:
         """
         Авторизация пользователя на стороне сервера terra_ai
         :return: dict
@@ -55,22 +71,6 @@ class Launcher:
         except Exception as error:
             self.__error(str(error))
 
-    def __prepare(self, data: dict):
-        """
-        Подготовка необходимых файлов по полученным после авторизации данным
-        :param data: dict - Словарь данных, которые вернула авторизация
-        :return: None
-        """
-        for value in data.values():
-            with open(value.get("name"), "w") as file:
-                file.write(value.get("data"))
-
-    def __run_shell(self, command: list):
-        with subprocess.Popen(command) as process:
-            print("Start:", " ".join(command))
-            process.wait()
-            print("!", " ".join(command))
-
     def getup(self, dataset: Optional[Any] = None):
         """
         Запуск веб-сервера
@@ -92,7 +92,7 @@ class Launcher:
             self.__error(response.get("error"))
             return
 
-        drive.mount(f"{COLAB_CONTENT_PATH}/drive")
+        # drive.mount(f"{COLAB_CONTENT_PATH}/drive")
 
         try:
             shutil.rmtree(COLAB_TERRA_GUI_PATH)
@@ -130,3 +130,6 @@ class Launcher:
                 response.get("data").get("user"),
             ]
         )
+
+
+launcher = Launcher()

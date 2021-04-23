@@ -15,7 +15,11 @@ setup(
         "requests~=2.23.0",
         "folium==0.2.1",
     ],
-    # entry_points={"console_scripts": ["terra_colab_web = terra_colab.commands:web"]},
+    entry_points={
+        "console_scripts": [
+            "terra_colab_auth = terra_colab.commands:auth2shell",
+        ]
+    },
     scripts=[
         "scripts/terra_colab_web",
     ],

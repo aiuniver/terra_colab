@@ -1,10 +1,56 @@
 #!/usr/bin/env bash
 
 export CONTENT_PATH=/content
+export DATASET
 
+red=$(tput setaf 1)
+reset=$(tput sgr0)
 
-cd $CONTENT_PATH
-ls -la
+function usage() {
+    echo "Запуск web-сервиса"
+    echo "!terra_colab_web [options]"
+    echo "    -h, --help    - Данная справочная информация"
+    echo "    -d, --dataset - Имя переменной экземпляра класса DTS"
+    echo ""
+    echo "Примеры"
+    echo "    1) !terra_colab_web -d=dataset"
+    echo "    2) !terra_colab_web --dataset=dataset"
+    echo "    3) !terra_colab_web"
+    echo "1) и 2) - запуск веб-сервиса с передачей датасета"
+    echo "3) - запуск веб-сервиса без передачи датасета"
+    echo ""
+}
+
+while [ "$1" != "" ]; do
+    PARAM=$(echo $1 | awk -F= '{print $1}')
+    VALUE=$(echo $1 | awk -F= '{print $2}')
+    case $PARAM in
+        -h | --help)
+            usage
+            exit
+            ;;
+        -d | --dataset)
+            DATASET=$VALUE
+            ;;
+        *)
+            echo "${red}ERROR: unknown parameter \"$PARAM\"${reset}"
+            echo ""
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+echo -ne "Введите E-mail: "
+read EMAIL
+echo -ne "Введите Token: "
+read TOKEN
+
+#export AUTH=$(terra_colab_auth)
+#echo $AUTH
+#cd $CONTENT_PATH || exit
+
 
 #pip install -r ./requirements/colab.txt
 #chmod 400", response.get("data").get("rsa")])
