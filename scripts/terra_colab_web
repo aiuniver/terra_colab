@@ -53,7 +53,7 @@ read -p "Введите Token: " TOKEN
 
 RESPONSE=$(terra_colab_auth --email=$EMAIL --token=$TOKEN --url=$AUTH_URL)
 if [ -z "$RESPONSE" ]; then
-  make &> /dev/null
+  make
 else
   echo $RESPONSE
 fi
