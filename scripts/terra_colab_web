@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export CONTENT_PATH=/content
+export TERRA_GUI_PATH=$CONTENT_PATH/terra_gui
 export DATASET
 
 red=$(tput setaf 1)
@@ -42,10 +43,16 @@ while [ "$1" != "" ]; do
     shift
 done
 
-echo -ne "Введите E-mail: "
-read EMAIL
-echo -ne "Введите Token: "
-read TOKEN
+cd $CONTENT_PATH
+
+rm -rf $TERRA_GUI_PATH
+git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
+cd $TERRA_GUI_PATH
+
+#echo -ne "Введите E-mail: "
+#read EMAIL
+#echo -ne "Введите Token: "
+#read TOKEN
 
 #export AUTH=$(terra_colab_auth)
 #echo $AUTH
