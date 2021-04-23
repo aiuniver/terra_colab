@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-CONTENT_PATH=/content
 TERRA_GUI_PATH=$CONTENT_PATH/terra_gui
 AUTH_URL=http://terra.neural-university.ru/api/v1/login/
 
@@ -46,53 +45,12 @@ done
 read -p "Введите E-mail: " EMAIL
 read -p "Введите Token: " TOKEN
 
-RESPONSE=$(curl -sS -X POST -H "Content-Type: application/json" -d '{"email":"'$EMAIL'","user_token":"'$TOKEN'"}' $AUTH_URL)
-echo $RESPONSE
-
-#rm -rf $TERRA_GUI_PATH
-#git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
-#cd $TERRA_GUI_PATH || exit
-#pip install -r ./requirements/colab.txt
-#./manage.py runserver 127.0.0.1:80
-
-
-#cd $CONTENT_PATH
-#echo "------------"
-#export AUTH=$(terra_colab_auth)
-#echo "------------"
-
-#rm -rf $TERRA_GUI_PATH
-#git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
-#cd $TERRA_GUI_PATH
-#pip install -r ./requirements/colab.txt
-#./manage.py runserver 127.0.0.1:80
-
-#echo -ne "Введите E-mail: "
-#read EMAIL
-#echo -ne "Введите Token: "
-#read TOKEN
-
-#export AUTH=$(terra_colab_auth)
-#echo $AUTH
-#cd $CONTENT_PATH || exit
-
-
-#pip install -r ./requirements/colab.txt
-#chmod 400", response.get("data").get("rsa")])
-#self.__run_shell(["chmod +x ./manage.py"])
-#self.__run_shell(
-#    [
-#        "./manage.py",
-#        "runserver",
-#        "80",
-#        "&",
-#        "ssh",
-#        "-i",
-#        response.get("data").get("rsa"),
-#        "-o",
-#        "StrictHostKeyChecking=no",
-#        "-R",
-#        f'{response.get("data").get("port")}:localhost:80',
-#        response.get("data").get("user"),
-#    ]
-#)
+RESPONSE=$(terra_colab_auth --email=$EMAIL --token=$TOKEN --url=$AUTH_URL)
+if [ -z "$RESPONSE" ]; then
+  rm -rf $TERRA_GUI_PATH
+  git clone https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
+  cd $TERRA_GUI_PATH || exit
+  make
+else
+  echo $RESPONSE
+fi

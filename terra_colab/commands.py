@@ -1,38 +1,29 @@
-# from google.colab import drive
-import os
+import requests
 
-from .launcher import launcher
-
-import sys
-import os, subprocess
-
-# p=subprocess.Popen('env',stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
-# oldEnv=p.communicate()[0]
-# p=subprocess.Popen('source /tmp/test/setenv.sh ; env',stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
-# newEnv=p.communicate()[0]
-# for newStr in newEnv.split('\n'):
-#     flag = True
-#     for oldStr in oldEnv.split('\n'):
-#         if newStr == oldStr:
-#             #not exported by setenv.sh
-#             flag = False
-#             break
-#     if flag:
-#         #exported by setenv.sh
-#         print newStr
+from argparse import ArgumentParser
 
 
 def auth():
-    # email = input("Введите E-mail: ")
-    # token = input("Введите Token: ")
-    # drive.mount("/content/drive")
-    # launcher.auth()
-    # launcher = Launcher()
-    # print(launcher)
-    # print(globals().keys())
-    print(f"export EMAIL={email}")
-    print(f"export TOKEN={token}")
+    parser = ArgumentParser()
+    parser.add_argument("--email", type=str)
+    parser.add_argument("--token", type=str)
+    parser.add_argument("--url", type=str)
+    args = parser.parse_args()
 
+    response = requests.post(
+        args.url, json={"email": args.email, "user_token": args.token}
+    )
+    if not response.ok:
+        print("Ошибка запроса авторизации! Попробуйте позже...")
+        return
 
-def gdmount():
-    pass
+    data = response.json()
+
+    if not data.get("success"):
+        print(data.get("error"))
+        return
+
+    files = data.get("data").get("create")
+    for name, info in files.items():
+        with open(info.get("name"), "w") as file:
+            file.write(info.get("data"))
