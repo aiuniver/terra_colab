@@ -44,7 +44,9 @@ while [ "$1" != "" ]; do
 done
 
 cd $CONTENT_PATH
+echo "------------"
 export AUTH=$(terra_colab_auth)
+echo "------------"
 
 rm -rf $TERRA_GUI_PATH
 git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
