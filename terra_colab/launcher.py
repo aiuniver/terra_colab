@@ -6,10 +6,12 @@ import subprocess
 from google.colab import drive
 from typing import Optional, Any
 
-COLAB_CONTENT_PATH = "/content"
-COLAB_TERRA_GUI_PATH = f"{COLAB_CONTENT_PATH}/terra_gui"
-COLAB_AUTH_URL = "http://terra.neural-university.ru/api/v1/login/"
-COLAB_TERRA_GUI_GIT = "https://github.com/aiuniver/terra_gui.git"
+from . import (
+    COLAB_CONTENT_PATH,
+    COLAB_TERRA_GUI_PATH,
+    COLAB_AUTH_URL,
+    COLAB_TERRA_GUI_GIT,
+)
 
 
 class LauncherBase:
@@ -128,3 +130,6 @@ class LauncherBase:
                 response.get("data").get("user"),
             ]
         )
+
+
+LauncherBase()
