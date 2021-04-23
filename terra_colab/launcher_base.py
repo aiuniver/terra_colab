@@ -17,7 +17,7 @@ class LauncherBase:
     Класс для управления запуском веб-сервера
     """
 
-    def print_globals_keys():
+    def print_globals_keys(self):
         print(globals().keys())
 
     def __error(self, message: str):
