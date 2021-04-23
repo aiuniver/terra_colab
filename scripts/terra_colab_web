@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+TERRA_GUI_PATH=/content/terra_gui
+AUTH_URL=http://terra.neural-university.ru/api/v1/login/
+
+red=$(tput setaf 1)
+reset=$(tput sgr0)
+
+function usage() {
+  echo "Запуск web-сервиса"
+  echo "!terra_colab_web [options]"
+  echo "    -h, --help    - Данная справочная информация"
+  echo "    -d, --dataset - Имя переменной экземпляра класса DTS"
+  echo ""
+  echo "Примеры"
+  echo "    1) !terra_colab_web -d=dataset"
+  echo "    2) !terra_colab_web --dataset=dataset"
+  echo "    3) !terra_colab_web"
+  echo "1) и 2) - запуск веб-сервиса с передачей датасета"
+  echo "3) - запуск веб-сервиса без передачи датасета"
+  echo ""
+}
+
+while [ "$1" != "" ]; do
+  PARAM=$(echo $1 | awk -F= '{print $1}')
+  VALUE=$(echo $1 | awk -F= '{print $2}')
+  case $PARAM in
+    -h | --help)
+      usage
+      exit
+      ;;
+    -d | --dataset)
+      DATASET=$VALUE
+      ;;
+    *)
+      echo "${red}ERROR: unknown parameter \"$PARAM\"${reset}"
+      echo ""
+      usage
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+terra_colab_gdmount
+
+rm -rf $TERRA_GUI_PATH
+git clone https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
+cd $TERRA_GUI_PATH || exit
+
+read -p "Введите E-mail: " EMAIL
+read -p "Введите Token: " TOKEN
+
+RESPONSE=$(terra_colab_auth --email=$EMAIL --token=$TOKEN --url=$AUTH_URL)
+if [ -z "$RESPONSE" ]; then
+  make DATASET=$DATASET
+else
+  echo $RESPONSE
+fi
