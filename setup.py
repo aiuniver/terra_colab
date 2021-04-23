@@ -5,6 +5,8 @@ from os.path import join, dirname
 from terra_colab import __version__
 
 
+print(globals().keys())
+
 setup(
     name="terra_colab",
     version=__version__,
