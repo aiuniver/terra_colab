@@ -15,5 +15,5 @@ setup(
         "requests~=2.23.0",
     ],
     entry_points={"console_scripts": ["terra_colab_web = terra_colab.commands:web"]},
-    scripts=["scripts/web.sh"],
+    scripts=["scripts/web"],
 )
