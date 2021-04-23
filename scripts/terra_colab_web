@@ -48,6 +48,7 @@ cd $CONTENT_PATH
 rm -rf $TERRA_GUI_PATH
 git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
 cd $TERRA_GUI_PATH
+./manage.py runserver 127.0.0.1:80
 
 #echo -ne "Введите E-mail: "
 #read EMAIL
