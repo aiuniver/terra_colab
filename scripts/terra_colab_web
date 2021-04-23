@@ -45,11 +45,12 @@ while [ "$1" != "" ]; do
     shift
 done
 
-terra_colab_auth
-echo "------------"
-echo $EMAIL
-echo $TOKEN
-echo "------------"
+rm -rf $TERRA_GUI_PATH
+git clone https://github.com/aiuniver/terra_gui.git ./terra_gui &> /dev/null
+cd $TERRA_GUI_PATH || exit
+pip install -r ./requirements/colab.txt
+./manage.py runserver 127.0.0.1:80
+
 
 #cd $CONTENT_PATH
 #echo "------------"
