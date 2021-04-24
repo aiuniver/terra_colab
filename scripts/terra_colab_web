@@ -9,7 +9,8 @@ reset=$(tput sgr0)
 function usage() {
   echo "Запуск web-сервиса"
   echo "!terra_colab_web [options]"
-  echo "    -h, --help    - Данная справочная информация"
+  echo "    -h, --help   - Данная справочная информация"
+  echo "    -b, --branch - Имя ветки репозитория проекта TerraGUI на github.org"
   echo ""
 }
 
@@ -20,6 +21,9 @@ while [ "$1" != "" ]; do
     -h | --help)
       usage
       exit
+      ;;
+    -b | --branch)
+      BRANCH=$VALUE
       ;;
     *)
       echo "${red}ERROR: unknown parameter \"$PARAM\"${reset}"
@@ -34,7 +38,7 @@ done
 terra_colab_gdmount
 
 rm -rf $TERRA_GUI_PATH
-git clone https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
+git clone --branch $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
 cd $TERRA_GUI_PATH || exit
 
 read -p "Введите E-mail: " EMAIL
@@ -42,7 +46,7 @@ read -p "Введите Token: " TOKEN
 
 RESPONSE=$(terra_colab_auth --email=$EMAIL --token=$TOKEN --url=$AUTH_URL)
 if [ -z "$RESPONSE" ]; then
-  make &> /dev/null
+  make
 else
   echo $RESPONSE
 fi
