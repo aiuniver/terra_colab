@@ -2,6 +2,7 @@
 
 TERRA_GUI_PATH=/content/terra_gui
 AUTH_URL=http://terra.neural-university.ru/api/v1/login/
+BRANCH=""
 
 red=$(tput setaf 1)
 reset=$(tput sgr0)
@@ -23,7 +24,7 @@ while [ "$1" != "" ]; do
       exit
       ;;
     -b | --branch)
-      BRANCH=$VALUE
+      BRANCH="--branch $VALUE"
       ;;
     *)
       echo "${red}ERROR: unknown parameter \"$PARAM\"${reset}"
@@ -38,7 +39,7 @@ done
 terra_colab_gdmount
 
 rm -rf $TERRA_GUI_PATH
-git clone --branch $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
+git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
 cd $TERRA_GUI_PATH || exit
 
 read -p "Введите E-mail: " EMAIL
