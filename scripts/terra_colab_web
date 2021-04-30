@@ -44,9 +44,8 @@ cd $TERRA_GUI_PATH || exit
 
 while [ -z "$AUTH_EMAIL" ]; do
   read -s -p "Введите E-mail: " AUTH_EMAIL
-  echo "\033[K"
+  echo ""
 done
-echo ""
 
 while [ -z "$AUTH_TOKEN" ]; do
   read -s -p "Введите Token: " AUTH_TOKEN
