@@ -44,6 +44,7 @@ cd $TERRA_GUI_PATH || exit
 
 while [ -z "$AUTH_EMAIL" ]; do
   read -s -p "Введите E-mail: " AUTH_EMAIL
+  echo "${red}Введите E-mail${reset}"
 done
 echo ""
 
