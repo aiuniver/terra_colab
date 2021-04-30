@@ -43,7 +43,9 @@ git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /
 cd $TERRA_GUI_PATH || exit
 
 read -s -p "Введите E-mail: " AUTH_EMAIL
+echo ""
 read -s -p "Введите Token: " AUTH_TOKEN
+echo ""
 
 RESPONSE=$(terra_colab_auth --email=$AUTH_EMAIL --token=$AUTH_TOKEN --url=$AUTH_URL)
 if [ -z "$RESPONSE" ]; then
