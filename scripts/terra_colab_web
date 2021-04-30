@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-export AUTH_EMAIL
-export AUTH_TOKEN
-
 TERRA_GUI_PATH=/content/terra_gui
 AUTH_URL=http://terra.neural-university.ru/api/v1/login/
 BRANCH=""
@@ -45,16 +42,12 @@ rm -rf $TERRA_GUI_PATH
 git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
 cd $TERRA_GUI_PATH || exit
 
-if [[ -z "$AUTH_EMAIL" || -z "$AUTH_TOKEN" ]]; then
-  read -p "Введите E-mail: " AUTH_EMAIL
-  read -p "Введите Token: " AUTH_TOKEN
-fi
+read -s -p "Введите E-mail: " AUTH_EMAIL
+read -s -p "Введите Token: " AUTH_TOKEN
 
 RESPONSE=$(terra_colab_auth --email=$AUTH_EMAIL --token=$AUTH_TOKEN --url=$AUTH_URL)
 if [ -z "$RESPONSE" ]; then
   make
 else
-  AUTH_EMAIL=""
-  AUTH_TOKEN=""
   echo "${red}$RESPONSE${reset}"
 fi
