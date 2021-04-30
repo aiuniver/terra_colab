@@ -43,8 +43,8 @@ git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /
 cd $TERRA_GUI_PATH || exit
 
 while [ -z "$AUTH_EMAIL" ]; do
-  read -s -p "Введите E-mail: " AUTH_EMAIL
-  echo "\n${red}Введите E-mail${reset}"
+  read -s -p "${red}Введите E-mail: ${reset}" AUTH_EMAIL
+  echo ""
 done
 echo ""
 
