@@ -36,12 +36,13 @@ while [ "$1" != "" ]; do
   shift
 done
 
-terra_colab_gdmount
+#terra_colab_gdmount
 
 rm -rf $TERRA_GUI_PATH
 git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
 cd $TERRA_GUI_PATH || exit
 
+env
 while [ -z "$AUTH_EMAIL" ]; do
   read -s -p "Введите E-mail: " AUTH_EMAIL
   echo ""
@@ -51,6 +52,7 @@ while [ -z "$AUTH_TOKEN" ]; do
   read -s -p "Введите Token: " AUTH_TOKEN
   echo ""
 done
+env
 
 RESPONSE=$(terra_colab_auth --email=$AUTH_EMAIL --token=$AUTH_TOKEN --url=$AUTH_URL)
 if [ -z "$RESPONSE" ]; then
