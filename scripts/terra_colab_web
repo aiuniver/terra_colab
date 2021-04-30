@@ -42,9 +42,14 @@ rm -rf $TERRA_GUI_PATH
 git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
 cd $TERRA_GUI_PATH || exit
 
-read -s -p "Введите E-mail: " AUTH_EMAIL
+while [ -z "$AUTH_EMAIL" ]; do
+  read -s -p "Введите E-mail: " AUTH_EMAIL
+done
 echo ""
-read -s -p "Введите Token: " AUTH_TOKEN
+
+while [ -z "$AUTH_EMAIL" ]; do
+  read -s -p "Введите Token: " AUTH_TOKEN
+done
 echo ""
 
 RESPONSE=$(terra_colab_auth --email=$AUTH_EMAIL --token=$AUTH_TOKEN --url=$AUTH_URL)
