@@ -36,7 +36,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
-terra_colab_gdmount
+#terra_colab_gdmount
 
 rm -rf $TERRA_GUI_PATH
 git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
