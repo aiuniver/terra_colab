@@ -47,7 +47,7 @@ while [ -z "$AUTH_EMAIL" ]; do
 done
 echo ""
 
-while [ -z "$AUTH_EMAIL" ]; do
+while [ -z "$AUTH_TOKEN" ]; do
   read -s -p "Введите Token: " AUTH_TOKEN
 done
 echo ""
