@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set AUTH_EMAIL
+set AUTH_TOKEN
+
 TERRA_GUI_PATH=/content/terra_gui
 AUTH_URL=http://terra.neural-university.ru/api/v1/login/
 BRANCH=""
