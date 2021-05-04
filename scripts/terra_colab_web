@@ -63,7 +63,7 @@ if [ -z "$RESPONSE" ]; then
 AUTH_EMAIL=$AUTH_EMAIL
 AUTH_TOKEN=$AUTH_TOKEN
 EOT
-  make
+  make &> /dev/null
 else
   rm $AUTH_ENV
   echo "${red}$RESPONSE${reset}"
