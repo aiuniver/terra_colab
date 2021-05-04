@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
-AUTH_ENV=./.auth.env
+TERRA_GUI_PATH=/content/terra_gui
+AUTH_ENV=$TERRA_GUI_PATH/.auth.env
+AUTH_URL=http://terra.neural-university.ru/api/v1/login/
+BRANCH=""
 
 if [ -f "$AUTH_ENV" ]; then
   set -o allexport; source $AUTH_ENV; set +o allexport
 fi
-
-TERRA_GUI_PATH=/content/terra_gui
-AUTH_URL=http://terra.neural-university.ru/api/v1/login/
-BRANCH=""
 
 red=$(tput setaf 1)
 reset=$(tput sgr0)
@@ -49,7 +48,7 @@ git clone $BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /
 cd $TERRA_GUI_PATH || exit
 
 while [ -z "$AUTH_EMAIL" ]; do
-  read -s -p "Введите E-mail: " AUTH_EMAIL
+  read -p "Введите E-mail: " AUTH_EMAIL
   echo ""
 done
 
