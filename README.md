@@ -70,8 +70,8 @@ ALLOWED_HOSTS=*
 TERRA_AI_DATA_PATH=./TerraAI
 TERRA_AI_EXCHANGE_API_URL=http://localhost:8080/api/v1/exchange
 ```
-`TERRA_AI_DATA_PATH` - путь к файлам, которые используются для хранения датасетов и других файлов проекта
-`TERRA_AI_EXCHANGE_API_URL` - API-url к запущенному веб-сервису `TerraAI`, а именно здесь нужно поменять `localhost:8080` на свой, который был указан при запуске веб-сервиса `TerraAI`
+`TERRA_AI_DATA_PATH` - путь к файлам, которые используются для хранения датасетов и других файлов проекта  
+`TERRA_AI_EXCHANGE_API_URL` - API-url к запущенному веб-сервису `TerraAI`, а именно здесь нужно поменять `localhost:8080` на свой, который был указан при запуске веб-сервиса `TerraAI`. Ну и конечно же мы здесь можем указать адрес production-версии проекта `TerraAI` - `terra.neural-university.ru`, т.о. у нас пропадает необходимость в запуске своего веб-сервиса `TerraAI`, но не советую его использовать, т.к. зачастую production-версия различается с development-версией.
 
 #### Запускаем веб-сервис
 ```
