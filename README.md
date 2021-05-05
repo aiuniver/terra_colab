@@ -6,7 +6,7 @@ Terra Colab contains methods for working in a Colaboratory notebook.
 ## Production
 
 ### Создаем новый ноутбук колаба
-https://colab.research.google.com/#create=true.
+https://colab.research.google.com/#create=true
 
 ### Устанавливаем пакет
 Через `github.com`
@@ -38,7 +38,7 @@ https://colab.research.google.com/#create=true.
 
 ## Development
 
-Для запуска необходимо запустить 2 веб-сервиса `TerraAI` и `TerraGUI`
+Для работы необходимо запустить 2 веб-сервиса `TerraAI` и `TerraGUI`
 
 ### Запуск `TerraAI`
 
@@ -46,6 +46,7 @@ https://colab.research.google.com/#create=true.
 ```
 python ./setup.py install
 ```
+Данную установку **ОБЯЗАТЕЛЬНО!** необходимо выполнять, если были какие-то изменения в проекте.
 
 #### Создаем в `./cyber_kennel` файл `.env` со следующим содержанием (все переменные должны быть определены)
 ```
