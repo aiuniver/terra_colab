@@ -48,8 +48,11 @@ if [ -z "$RESPONSE" ]; then
   cat <<EOT >> $TERRA_GUI_ENV
 TERRA_GUI_AUTH_EMAIL=$TERRA_GUI_AUTH_EMAIL
 TERRA_GUI_AUTH_TOKEN=$TERRA_GUI_AUTH_TOKEN
+PATH=$TERRA_GUI_PATH:$PATH
 EOT
-  PATH=$TERRA_GUI_PATH:$PATH
+  if [ -f "$TERRA_GUI_ENV" ]; then
+    set -o allexport; source $TERRA_GUI_ENV; set +o allexport
+  fi
   echo "${green}Установка выполнена!${reset}"
 else
   rm $TERRA_GUI_ENV &> /dev/null
