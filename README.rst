@@ -3,12 +3,12 @@ Terra Colab contains methods for working in a Colaboratory notebook.
 Production
 ==========
 
-Создаем новый ноутбук колаба
-----------------------------
+Создание нового ноутбука колаба
+-------------------------------
 https://colab.research.google.com/#create=true
 
-Устанавливаем пакет
--------------------
+Установка пакета
+----------------
 Через ``github.com``
 
 .. code-block:: bash
@@ -21,18 +21,29 @@ https://colab.research.google.com/#create=true
 
    !pip install terra_colab
 
-Запускаем веб-сервис
---------------------
+Инициализация веб-сервиса
+-------------------------
 
 .. code-block:: bash
 
-    !terra_colab_web
+    !tc-init
+
+Данная команда запрашивает доступ к ``Google.Drive`` и авторизацию в сервисе ``TerraAI``
+
+Запуск веб-сервиса
+------------------
+
+.. code-block:: bash
+
+    !tc-web
+
+Если авторизация не была выполнена до этой команды, то автоматически будет запущена команда ``tc-init``
 
 Так же данная команда может принимать аргумент ``-b`` или ``--branch`` - имя ветки репозитория проекта TerraGUI:
 
 .. code-block:: bash
 
-   !terra_colab_web --branch dev
+   !tc-web --branch dev
 
 Summary
 -------
@@ -41,7 +52,7 @@ Summary
 .. code-block:: bash
 
    !pip install terra_colab
-   !terra_colab_web
+   !tc-web
 
 
 Development
@@ -52,7 +63,7 @@ Development
 Запуск ``TerraAI``
 ------------------
 
-Устанавливаем пакет
+Установка пакета
 ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
