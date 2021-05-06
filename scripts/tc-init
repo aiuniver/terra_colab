@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+TERRA_GUI_PATH=/content/terra_gui
+TERRA_GUI_ENV=$TERRA_GUI_PATH/.terra-gui.env
+TERRA_GUI_AUTH_URL=http://terra.neural-university.ru/api/v1/login/
+TERRA_GUI_BRANCH=""
+
+if [ -f "$TERRA_GUI_ENV" ]; then
+  set -o allexport; source $TERRA_GUI_ENV; set +o allexport
+fi
+
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+reset=$(tput sgr0)
+
+while [ "$1" != "" ]; do
+  PARAM=$(echo $1 | awk -F= '{print $1}')
+  VALUE=$(echo $1 | awk -F= '{print $2}')
+  case $PARAM in
+    -b | --branch)
+      TERRA_GUI_BRANCH="--branch $VALUE"
+      ;;
+    *)
+      echo "${red}ERROR: unknown parameter \"$PARAM\"${reset}"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+rm -rf $TERRA_GUI_PATH
+git clone $TERRA_GUI_BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
+cd $TERRA_GUI_PATH || exit
+
+tc-gdmount
+
+while [ -z "$TERRA_GUI_AUTH_EMAIL" ]; do
+  read -p "Введите E-mail: " TERRA_GUI_AUTH_EMAIL
+done
+
+while [ -z "$TERRA_GUI_AUTH_TOKEN" ]; do
+  read -s -p "Введите Token: " TERRA_GUI_AUTH_TOKEN
+  echo ""
+done
+
+RESPONSE=$(tc-auth --email=$TERRA_GUI_AUTH_EMAIL --token=$TERRA_GUI_AUTH_TOKEN --url=$TERRA_GUI_AUTH_URL)
+if [ -z "$RESPONSE" ]; then
+  cat <<EOT >> $AUTH_ENV
+TERRA_GUI_AUTH_EMAIL=$TERRA_GUI_AUTH_EMAIL
+TERRA_GUI_AUTH_TOKEN=$TERRA_GUI_AUTH_TOKEN
+EOT
+  PATH=$TERRA_GUI_PATH:$PATH
+  echo "${green}Установка выполнена!${reset}"
+else
+  rm $AUTH_ENV
+  echo "${red}$RESPONSE${reset}"
+fi

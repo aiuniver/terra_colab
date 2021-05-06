@@ -1,3 +1,4 @@
+import os
 import requests
 
 from argparse import ArgumentParser
@@ -29,9 +30,7 @@ def auth():
         with open(info.get("name"), "w") as file:
             file.write(info.get("data"))
 
-    # return (
-    #     f'Для начала работы перейдите по следующей ссылке {data.get("data").get("url")}'
-    # )
+    os.environ["TERRA_GUI_URL"] = data.get("data").get("url")
 
 
 def gdmount():
