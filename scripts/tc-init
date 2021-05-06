@@ -53,6 +53,7 @@ EOT
   if [ -f "$TERRA_GUI_ENV" ]; then
     set -o allexport; source $TERRA_GUI_ENV; set +o allexport
   fi
+  export PATH
   echo "${green}Установка выполнена!${reset}"
 else
   rm $TERRA_GUI_ENV &> /dev/null
