@@ -1,4 +1,4 @@
-import os
+import sys
 import requests
 
 from argparse import ArgumentParser
@@ -39,8 +39,7 @@ def gdmount():
 
 
 def dataset():
-    os.environ.update({"PATH": f'{os.environ.get("PATH")}:/content/terra_gui'})
-    print(os.environ)
+    sys.path.append("/content/terra_gui")
     from terra_ai import trds
 
     print(trds)
