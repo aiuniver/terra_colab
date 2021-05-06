@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+TERRA_GUI_PATH=/content/terra_gui
+TERRA_GUI_ENV=$TERRA_GUI_PATH/.terra-gui.env
+
+if [ -f "$TERRA_GUI_ENV" ]; then
+  set -o allexport; source $TERRA_GUI_ENV; set +o allexport
+else
+  tc-init
+fi
+
+echo "Для начала работы перейдите по следующей ссылке $TERRA_GUI_URL"
+cd $TERRA_GUI_PATH || exit
+make &> /dev/null
