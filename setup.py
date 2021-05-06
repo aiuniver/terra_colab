@@ -21,6 +21,7 @@ setup(
         ]
     },
     scripts=[
+        "scripts/terra_colab_init",
         "scripts/terra_colab_web",
     ],
 )
