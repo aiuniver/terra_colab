@@ -40,6 +40,7 @@ def gdmount():
 
 def dataset():
     os.environ.update({"PATH": f'{os.environ.get("PATH")}:/content/terra_gui'})
+    print(os.environ)
     from terra_ai import trds
 
     print(trds)
