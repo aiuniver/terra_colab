@@ -3,11 +3,11 @@
 TERRA_GUI_PATH=/content/terra_gui
 TERRA_GUI_ENV=$TERRA_GUI_PATH/.terra-gui.env
 
-if [ -f "$TERRA_GUI_ENV" ]; then
-  set -o allexport; source $TERRA_GUI_ENV; set +o allexport
-else
+if [ ! -f "$TERRA_GUI_ENV" ]; then
   tc-init
 fi
+
+set -o allexport; source $TERRA_GUI_ENV; set +o allexport
 
 echo "Для начала работы перейдите по следующей ссылке $TERRA_GUI_URL"
 cd $TERRA_GUI_PATH || exit
