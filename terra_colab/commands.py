@@ -1,3 +1,4 @@
+import os
 import requests
 
 from argparse import ArgumentParser
@@ -35,3 +36,10 @@ def auth():
 
 def gdmount():
     drive.mount("/content/drive")
+
+
+def dataset():
+    os.environ.update({"PATH": f'{os.environ.get("PATH")}:/content/terra_gui'})
+    from terra_ai import trds
+
+    print(trds)

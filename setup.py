@@ -18,6 +18,7 @@ setup(
         "console_scripts": [
             "tc-auth = terra_colab.commands:auth",
             "tc-gdmount = terra_colab.commands:gdmount",
+            "tc-dataset = terra_colab.commands:dataset",
         ]
     },
     scripts=[
