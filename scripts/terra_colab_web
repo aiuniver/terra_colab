@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 TERRA_GUI_PATH=/content/terra_gui
+AUTH_ENV=$TERRA_GUI_PATH/.auth.env
 
 if [ -f "$AUTH_ENV" ]; then
   echo "Already auth"
