@@ -10,6 +10,7 @@ if [ -f "$AUTH_ENV" ]; then
 fi
 
 red=$(tput setaf 1)
+green=$(tput setaf 2)
 reset=$(tput sgr0)
 
 while [ "$1" != "" ]; do
@@ -49,6 +50,7 @@ AUTH_EMAIL=$AUTH_EMAIL
 AUTH_TOKEN=$AUTH_TOKEN
 EOT
   PATH=$TERRA_GUI_PATH:$PATH
+  echo "${green}Установка выполнена!${reset}"
 else
   rm $AUTH_ENV
   echo "${red}$RESPONSE${reset}"

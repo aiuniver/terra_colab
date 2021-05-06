@@ -3,10 +3,13 @@
 TERRA_GUI_PATH=/content/terra_gui
 
 if [ -f "$AUTH_ENV" ]; then
+  echo "Already auth"
   set -o allexport; source $AUTH_ENV; set +o allexport
 else
+  echo "Start init"
   terra_colab_init
 fi
 
+echo "Start service"
 cd $TERRA_GUI_PATH || exit
 make &> /dev/null
