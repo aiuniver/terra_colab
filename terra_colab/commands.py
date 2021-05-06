@@ -41,6 +41,8 @@ def gdmount():
 def trds():
     sys.path.append("/content/terra_gui")
     from terra_ai import trds
+    from keras.datasets import mnist
 
+    (X, Y), (_, _) = mnist.load_data()
     dataset = trds.DTS()
     dataset.parameters(2, 2, globals())
