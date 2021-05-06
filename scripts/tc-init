@@ -52,6 +52,6 @@ EOT
   PATH=$TERRA_GUI_PATH:$PATH
   echo "${green}Установка выполнена!${reset}"
 else
-  rm $TERRA_GUI_ENV
+  rm $TERRA_GUI_ENV &> /dev/null
   echo "${red}$RESPONSE${reset}"
 fi
