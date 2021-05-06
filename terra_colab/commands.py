@@ -31,7 +31,7 @@ def auth():
             file.write(info.get("data"))
 
     with open("/content/terra_gui/.terra-gui.env", "a") as file:
-        file.write(f'TERRA_GUI_URL={data.get("data").get("url")}')
+        file.write(f'TERRA_GUI_URL={data.get("data").get("url")}\n')
 
 
 def gdmount():
