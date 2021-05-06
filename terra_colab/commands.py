@@ -38,8 +38,9 @@ def gdmount():
     drive.mount("/content/drive")
 
 
-def dataset():
+def trds():
     sys.path.append("/content/terra_gui")
     from terra_ai import trds
 
-    print(trds)
+    dataset = trds.DTS()
+    dataset.parameters(2, 2, globals())

@@ -19,11 +19,12 @@ setup(
         "console_scripts": [
             "tc-auth = terra_colab.commands:auth",
             "tc-gdmount = terra_colab.commands:gdmount",
-            "tc-dataset = terra_colab.commands:dataset",
+            "tc-trds = terra_colab.commands:trds",
         ]
     },
     scripts=[
         "scripts/tc-init",
+        "scripts/tc-dataset",
         "scripts/tc-web",
     ],
 )
