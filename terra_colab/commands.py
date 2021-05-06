@@ -30,6 +30,7 @@ def auth():
         with open(info.get("name"), "w") as file:
             file.write(info.get("data"))
 
+    print(os.environ)
     os.environ["TERRA_GUI_URL"] = data.get("data").get("url")
 
 
