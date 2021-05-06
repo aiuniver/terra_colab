@@ -45,13 +45,13 @@ done
 
 RESPONSE=$(tc-auth --email=$TERRA_GUI_AUTH_EMAIL --token=$TERRA_GUI_AUTH_TOKEN --url=$TERRA_GUI_AUTH_URL)
 if [ -z "$RESPONSE" ]; then
-  cat <<EOT >> $AUTH_ENV
+  cat <<EOT >> $TERRA_GUI_ENV
 TERRA_GUI_AUTH_EMAIL=$TERRA_GUI_AUTH_EMAIL
 TERRA_GUI_AUTH_TOKEN=$TERRA_GUI_AUTH_TOKEN
 EOT
   PATH=$TERRA_GUI_PATH:$PATH
   echo "${green}Установка выполнена!${reset}"
 else
-  rm $AUTH_ENV
+  rm $TERRA_GUI_ENV
   echo "${red}$RESPONSE${reset}"
 fi
