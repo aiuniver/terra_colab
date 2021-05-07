@@ -13,6 +13,7 @@ setup(
         "dill>=0.3.3",
         "requests~=2.23.0",
         "folium==0.2.1",
+        "pymorphy2>=0.9.1",
     ],
     entry_points={
         "console_scripts": [
