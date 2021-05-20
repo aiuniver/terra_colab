@@ -13,19 +13,12 @@ red=$(tput setaf 1)
 green=$(tput setaf 2)
 reset=$(tput sgr0)
 
-while [ "$1" != "" ]; do
-  PARAM=$(echo $1 | awk -F= '{print $1}')
-  VALUE=$(echo $2 | awk -F= '{print $2}')
-  case $PARAM in
-    -b | --branch)
-      TERRA_GUI_BRANCH="--branch $VALUE"
-      ;;
-    *)
-      echo "${red}ERROR: unknown parameter \"$PARAM\"${reset}"
-      exit 1
-      ;;
-  esac
-  shift
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -b|--branch) TERRA_GUI_BRANCH="--branch $2"; shift ;;
+        *) echo "${red}ERROR: unknown parameter \"$1\"${reset}"; exit 1 ;;
+    esac
+    shift
 done
 
 rm -rf $TERRA_GUI_PATH
