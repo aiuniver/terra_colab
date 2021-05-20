@@ -2,9 +2,29 @@
 
 TERRA_GUI_PATH=/content/terra_gui
 TERRA_GUI_ENV=$TERRA_GUI_PATH/.terra-gui.env
+TERRA_GUI_BRANCH=""
+
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+reset=$(tput sgr0)
+
+while [ "$1" != "" ]; do
+  PARAM=$(echo $1 | awk -F= '{print $1}')
+  VALUE=$(echo $1 | awk -F= '{print $2}')
+  case $PARAM in
+    -b | --branch)
+      TERRA_GUI_BRANCH="--branch $VALUE"
+      ;;
+    *)
+      echo "${red}ERROR: unknown parameter \"$PARAM\"${reset}"
+      exit 1
+      ;;
+  esac
+  shift
+done
 
 if [ ! -f "$TERRA_GUI_ENV" ]; then
-  tc-init
+  tc-init $TERRA_GUI_BRANCH
 fi
 
 set -o allexport; source $TERRA_GUI_ENV; set +o allexport
