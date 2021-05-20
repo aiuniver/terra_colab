@@ -15,7 +15,7 @@ reset=$(tput sgr0)
 
 while [ "$1" != "" ]; do
   PARAM=$(echo $1 | awk -F= '{print $1}')
-  VALUE=$(echo $1 | awk -F= '{print $2}')
+  VALUE=$(echo $2 | awk -F= '{print $2}')
   case $PARAM in
     -b | --branch)
       TERRA_GUI_BRANCH="--branch $VALUE"
