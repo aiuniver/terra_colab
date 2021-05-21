@@ -24,6 +24,7 @@ done
 rm -rf $TERRA_GUI_PATH
 git clone $TERRA_GUI_BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
 cd $TERRA_GUI_PATH || exit
+python $TERRA_GUI_PATH/terra_ai/setup.py install
 
 tc-gdmount
 
