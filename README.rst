@@ -88,7 +88,7 @@ Development
 
 .. code-block:: bash
 
-    python ./cyber_kennel/manage.py localhost:8080
+    python ./cyber_kennel/manage.py runserver localhost:8080
 
 Вместо ``localhost:8080`` естественно ставим свои данные, далее этот сервис понадобится указать в окружении сервиса ``TerraGUI``
 
@@ -115,6 +115,6 @@ Development
 
 .. code-block:: bash
 
-   python ./manage.py localhost:8000
+   python ./manage.py runserver localhost:8000
 
 Вместо ``localhost:8000`` естественно ставим свои данные
