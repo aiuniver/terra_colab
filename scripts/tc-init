@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 
-TERRA_GUI_PATH=/content/terra_gui
-TERRA_GUI_ENV=$TERRA_GUI_PATH/.terra-gui.env
-TERRA_GUI_AUTH_URL=http://terra.neural-university.ru/api/v1/login/
+TERRA_PREFIX=""
 TERRA_GUI_BRANCH=""
-
-if [ -f "$TERRA_GUI_ENV" ]; then
-  set -o allexport; source $TERRA_GUI_ENV; set +o allexport
-fi
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
@@ -16,10 +10,19 @@ reset=$(tput sgr0)
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -b|--branch) TERRA_GUI_BRANCH="--branch $2"; shift ;;
+        -e|--env) TERRA_PREFIX="$2."; shift ;;
         *) echo "${red}ERROR: unknown parameter \"$1\"${reset}"; exit 1 ;;
     esac
     shift
 done
+
+TERRA_GUI_PATH=/content/terra_gui
+TERRA_GUI_ENV=$TERRA_GUI_PATH/.terra-gui.env
+TERRA_GUI_AUTH_URL=http://${TERRA_PREFIX}terra.neural-university.ru/api/v1/login/
+
+if [ -f "$TERRA_GUI_ENV" ]; then
+  set -o allexport; source $TERRA_GUI_ENV; set +o allexport
+fi
 
 rm -rf $TERRA_GUI_PATH
 git clone $TERRA_GUI_BRANCH https://github.com/aiuniver/terra_gui.git $TERRA_GUI_PATH &> /dev/null
