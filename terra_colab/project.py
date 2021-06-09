@@ -5,4 +5,4 @@ class TerraProject:
         self.name = name
 
     def __repr__(self):
-        print(f"{self.__class__}: {self.name}")
+        return f"{self.__class__}: {self.name}"
