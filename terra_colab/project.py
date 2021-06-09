@@ -1,5 +1,6 @@
 import os
 import json
+import importlib.util
 
 from typing import List
 
@@ -25,7 +26,7 @@ class TerraProject:
                     with open(os.path.join(self.project_path, item), "r") as config_ref:
                         self.config = json.load(config_ref)
                 if item.endswith(".py"):
-                    pass
+                    self.model = self.load_keras(os.path.join(self.project_path, item))
         except FileNotFoundError as error:
             print(f"Проект «{self.name}» не существует")
 
@@ -41,3 +42,9 @@ config: {self.config}"""
     @property
     def project_path(self) -> str:
         return os.path.join(TERRA_AI_PATH, "projects", self.name)
+
+    def load_keras(self, filepath: str) -> Model:
+        spec = importlib.util.spec_from_file_location("keras", filepath)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.model
