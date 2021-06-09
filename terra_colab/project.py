@@ -22,6 +22,7 @@ class TerraProject:
                 if item.endswith(".h5"):
                     self.h5.append(item)
                 if item.endswith(".conf"):
+                    print(os.path.join(self.project_path, item))
                     self.config = json.load(os.path.join(self.project_path, item))
                 if item.endswith(".py"):
                     print("Create model from keras.py")
