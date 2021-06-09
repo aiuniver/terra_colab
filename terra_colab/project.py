@@ -2,8 +2,6 @@ import os
 import json
 import importlib.util
 
-from typing import List
-
 from tensorflow.keras.models import Model, load_model
 
 
@@ -11,13 +9,16 @@ TERRA_AI_PATH = "/content/drive/MyDrive/TerraAI"
 
 
 class TerraProject:
-    name: str = ""
-    h5: List[str] = []
-    model: Model = None
-    config: dict = {}
+    name: str
+    h5: list
+    model: Model
+    config: dict
 
     def __init__(self, name: str):
         self.name = name
+        self.h5 = []
+        self.model = None
+        self.config = {}
         try:
             for item in os.listdir(self.project_path):
                 if item.endswith(".h5"):
