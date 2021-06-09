@@ -25,12 +25,16 @@ class TerraProject:
                     with open(os.path.join(self.project_path, item), "r") as config_ref:
                         self.config = json.load(config_ref)
                 if item.endswith(".py"):
-                    print("Create model from keras.py")
+                    pass
         except FileNotFoundError as error:
             print(f"Проект «{self.name}» не существует")
 
     def __str__(self):
-        return f"<{self.__class__.__name__}> {self.name}"
+        return f"""<{self.__class__.__name__}> {self.name}
+    h5: {self.h5}
+    model: {self.model}
+    config: {self.config}
+"""
 
     def __repr__(self):
         return self.__str__()
