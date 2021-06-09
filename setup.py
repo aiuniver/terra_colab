@@ -10,6 +10,7 @@ setup(
     packages=find_packages(),
     long_description=open("README.rst").read(),
     install_requires=[
+        "tensorflow==2.3.0",
         "dill>=0.3.3",
         "requests~=2.23.0",
         "folium==0.2.1",
