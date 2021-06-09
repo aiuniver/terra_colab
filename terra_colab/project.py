@@ -22,16 +22,8 @@ class TerraProject:
                 if item.endswith(".h5"):
                     self.h5.append(item)
                 if item.endswith(".conf"):
-                    print(
-                        os.path.join(self.project_path, item)
-                        .encode("utf-8")
-                        .decode("utf-8")
-                    )
-                    self.config = json.load(
-                        os.path.join(self.project_path, item)
-                        .encode("utf-8")
-                        .decode("utf-8")
-                    )
+                    with open(os.path.join(self.project_path, item), "r") as config_ref:
+                        self.config = json.load(config_ref)
                 if item.endswith(".py"):
                     print("Create model from keras.py")
         except FileNotFoundError as error:
