@@ -3,7 +3,7 @@ import json
 
 from typing import List
 
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model, load_model
 
 
 TERRA_AI_PATH = "/content/drive/MyDrive/TerraAI"
@@ -20,7 +20,7 @@ class TerraProject:
         try:
             for item in os.listdir(self.project_path):
                 if item.endswith(".h5"):
-                    self.h5.append(item)
+                    self.h5.append(load_model(os.path.join(self.project_path, item)))
                 if item.endswith(".conf"):
                     with open(os.path.join(self.project_path, item), "r") as config_ref:
                         self.config = json.load(config_ref)
@@ -31,10 +31,9 @@ class TerraProject:
 
     def __str__(self):
         return f"""<{self.__class__.__name__}> {self.name}
-    h5: {self.h5}
-    model: {self.model}
-    config: {self.config}
-"""
+h5: {self.h5}
+model: {self.model}
+config: {self.config}"""
 
     def __repr__(self):
         return self.__str__()
