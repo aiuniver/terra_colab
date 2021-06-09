@@ -15,6 +15,10 @@ setup(
         "requests~=2.23.0",
         "folium==0.2.1",
         "pymorphy2>=0.9.1",
+        "six~=1.15.0",
+        "Jinja2<3.0,>=2.10.1",
+        "Werkzeug<2.0,>=0.15",
+        "imgaug<0.2.7,>=0.2.5",
     ],
     entry_points={
         "console_scripts": [
