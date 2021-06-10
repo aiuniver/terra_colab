@@ -10,10 +10,23 @@ setup(
     packages=find_packages(),
     long_description=open("README.rst").read(),
     install_requires=[
+        "tensorflow==2.3.0",
         "dill>=0.3.3",
         "requests~=2.23.0",
         "folium==0.2.1",
         "pymorphy2>=0.9.1",
+        "six~=1.15.0",
+        "Jinja2<3.0,>=2.10.1",
+        "Werkzeug<2.0,>=0.15",
+        "imgaug<0.2.7,>=0.2.5",
+        "Django==3.2",
+        "django-environ==0.4.5",
+        "djangorestframework==3.12.4",
+        "django_compressor==2.4.1",
+        "django-htmlmin==0.11.0",
+        "pydantic>=1.8.2",
+        "cairosvg==2.5.2",
+        "PyYAML==5.4.1",
     ],
     entry_points={
         "console_scripts": [
