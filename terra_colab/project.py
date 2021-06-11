@@ -1,7 +1,10 @@
 import os
 import importlib.util
 
+from typing import Dict
+
 from tensorflow.keras.models import Model, load_model
+from tensorflow.python.keras.engine.functional import Functional
 
 
 TERRA_AI_PATH = "/content/drive/MyDrive/TerraAI"
@@ -9,21 +12,25 @@ TERRA_AI_PATH = "/content/drive/MyDrive/TerraAI"
 
 class TerraProject:
     name: str
-    h5: list
+    h5: Dict[str, Functional]
     model: Model
 
     def __init__(self, name: str):
         self.name = name
-        self.h5 = []
+        self.h5 = {}
         self.model = None
         try:
             for item in os.listdir(self.project_path):
                 if item.endswith(".h5"):
-                    self.h5.append(load_model(os.path.join(self.project_path, item)))
+                    name = item.split(".")
+                    name.pop()
+                    self.h5.update(
+                        {name.pop(): load_model(os.path.join(self.project_path, item))}
+                    )
                 if item.endswith(".py"):
                     self.model = self.load_keras(os.path.join(self.project_path, item))
         except FileNotFoundError as error:
-            print(f"Проект «{self.name}» не существует")
+            print(f"Не удалось прочитать проект «{self.name}»")
 
     def __str__(self):
         return f"""<{self.__class__.__name__}> {self.name}
