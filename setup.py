@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
+__version__ = "0.3"
+
 from setuptools import setup, find_packages
-from terra_colab import __version__
 
 
 setup(
@@ -27,6 +28,9 @@ setup(
         "pydantic>=1.8.2",
         "cairosvg==2.5.2",
         "PyYAML==5.4.1",
+        "absl-py==0.12.0",
+        "scipy==1.4.1",
+        "numpy<1.19.0,>=1.16.0",
     ],
     entry_points={
         "console_scripts": [
