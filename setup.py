@@ -12,7 +12,7 @@ setup(
     long_description=open("README.rst").read(),
     install_requires=[
         "tensorflow==2.5.0",
-        "dill>=0.3.3",
+        "dill>=0.3.4",
         "requests~=2.23.0",
         "folium==0.2.1",
         "pymorphy2>=0.9.1",
