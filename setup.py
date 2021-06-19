@@ -31,6 +31,7 @@ setup(
         "absl-py==0.12.0",
         "scipy==1.4.1",
         "numpy~=1.19.2",
+        "transliterate==1.10.2",
     ],
     entry_points={
         "console_scripts": [
