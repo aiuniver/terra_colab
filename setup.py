@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     long_description=open("README.rst").read(),
     install_requires=[
-        "tensorflow==2.3.0",
+        "tensorflow==2.5.0",
         "dill>=0.3.3",
         "requests~=2.23.0",
         "folium==0.2.1",
@@ -30,7 +30,7 @@ setup(
         "PyYAML==5.4.1",
         "absl-py==0.12.0",
         "scipy==1.4.1",
-        "numpy<1.19.0,>=1.16.0",
+        "numpy~=1.19.2",
     ],
     entry_points={
         "console_scripts": [
