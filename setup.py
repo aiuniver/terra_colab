@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__ = "0.3"
+__version__ = "0.4"
 
 from setuptools import setup, find_packages
 
@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     long_description=open("README.rst").read(),
     install_requires=[
-        "tensorflow==2.5.0",
+        "tensorflow==2.6.0",
         "dill>=0.3.4",
         "requests~=2.23.0",
         "folium==0.2.1",
