@@ -20,7 +20,7 @@ setup(
         "Jinja2<3.0,>=2.10.1",
         "Werkzeug<2.0,>=0.15",
         "imgaug<0.2.7,>=0.2.5",
-        "Django==3.2",
+        "Django==3.2.6",
         "django-environ==0.4.5",
         "djangorestframework==3.12.4",
         "django_compressor==2.4.1",
