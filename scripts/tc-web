@@ -27,5 +27,4 @@ set -o allexport; source $TERRA_GUI_ENV; set +o allexport
 
 echo "Для начала работы перейдите по следующей ссылке $TERRA_GUI_URL"
 cd $TERRA_GUI_PATH || exit
-#make &> /dev/null
-make
+make &> /dev/null
