@@ -19,7 +19,7 @@ setup(
         "six~=1.15.0",
         "Jinja2<3.0,>=2.10.1",
         "Werkzeug<2.0,>=0.15",
-        "imgaug<0.2.7,>=0.2.5",
+        "imgaug==0.4.0",
         "Django==3.2.6",
         "django-environ==0.4.5",
         "djangorestframework==3.12.4",
