@@ -3,9 +3,12 @@
 TERRA_ENV=""
 TERRA_GUI_BRANCH=""
 
+echo 1
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 reset=$(tput sgr0)
+
+echo 2
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -16,14 +19,25 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
+echo 3
+echo "$TERRA_GUI_BRANCH"
+echo "$TERRA_ENV"
+
 TERRA_GUI_PATH=/content/terra_gui
 TERRA_GUI_ENV=$TERRA_GUI_PATH/.terra-gui.env
 
+echo 4
+
 if [ ! -f "$TERRA_GUI_ENV" ]; then
+  echo 5
+  echo "Run tc-init $TERRA_ENV $TERRA_GUI_BRANCH"
   tc-init $TERRA_ENV $TERRA_GUI_BRANCH
 fi
 
+echo 6
+
 set -o allexport; source $TERRA_GUI_ENV; set +o allexport
+echo 7
 
 echo "Для начала работы перейдите по следующей ссылке $TERRA_GUI_URL"
 cd $TERRA_GUI_PATH || exit
