@@ -109,6 +109,7 @@ class WebServer:
     __branch: Optional[str]
     __force: bool
     __path: Path
+    __url: str = ""
     __email: str = ""
     __token: str = ""
 
@@ -129,7 +130,10 @@ class WebServer:
  Env    : {self.__env}
  Branch : {self.__branch}
  Force  : {self.__force}
- Path   : {self.__path}"""
+ Path   : {self.__path}
+ URL    : {self.__url}
+ Email  : {self.__email}
+ Token  : {self.__token}"""
 
     def __auth(self):
         _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
@@ -157,6 +161,8 @@ class WebServer:
         data = response.json()
         if not data.get("success"):
             raise WebServerException(str(data.get("error")))
+
+        self.__url = data.get("data", {}).get("url", "")
 
         for name, value in data.get("data", {}).items():
             print(name, value)
