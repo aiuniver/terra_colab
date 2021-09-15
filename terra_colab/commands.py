@@ -9,7 +9,10 @@ from pathlib import Path
 from google.colab import drive as google_drive
 
 
+DEFAULT_ENV = "prod"
+
 TERRA_REPOSITORY = "https://github.com/aiuniver/terra_gui.git"
+EXTERNAL_SERVER_API = "http://%sterra.neural-university.ru/api/v1"
 
 GOOGLE_DRIVE_DIRECTORY = "drive"
 TERRA_DIRECTORY = "terra"
@@ -31,7 +34,7 @@ def _parse_argv(argv) -> dict:
     """
     opts = []
     try:
-        opts, args = getopt.getopt(argv, "hb:f", ["help", "branch=", "force"])
+        opts, args = getopt.getopt(argv, "he:b:f", ["help", "env=", "branch=", "force"])
     except getopt.GetoptError:
         pass
 
@@ -46,6 +49,8 @@ SYNOPSIS
 OPTIONS
     -h, --help
             Показать эту документацию
+    -e, --env
+            Используемое окружение на удаленном сервере
     -b, --branch
             Ветка в репозитории пользовательского интерфейса
     -f, --force
@@ -57,26 +62,32 @@ OPTIONS
         sys.exit()
 
     output = {
+        "env": DEFAULT_ENV,
         "branch": None,
         "force": False,
     }
     for opt, arg in opts:
-        if opt in ("-b", "--branch"):
+        if opt in ("-e", "--env"):
+            output.update({"env": arg})
+        elif opt in ("-b", "--branch"):
             output.update({"branch": arg})
-        if opt in ("-f", "--force"):
+        elif opt in ("-f", "--force"):
             output.update({"force": True})
 
     return output
 
 
-def _auth() -> bool:
+def _auth(env: str = None) -> bool:
+    _domain_prefix = f"{env}." if env else ""
     _email = str(input(AUTH_EMAIL_LABEL))
     _token = str(input(AUTH_TOKEN_LABEL))
     response = requests.post(
-        args.url, json={"email": args.email, "user_token": args.token}
+        f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
+        json={"email": _email, "user_token": _token},
     )
+    print(response)
     if not response.ok:
-        print("Ошибка запроса авторизации! Попробуйте позже...")
+        _print_error("Ошибка запроса авторизации! Попробуйте позже...")
         return
 
     return False
