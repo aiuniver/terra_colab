@@ -117,16 +117,7 @@ class WebServer:
             f"\033[1;32mДля начала работы перейдите по следующей ссылке {self.__url}\033[0m"
         )
         try:
-            _logs = Path(self.__path, TERRA_DIRECTORY, "logs")
-            os.makedirs(_logs, exist_ok=True)
-            with open(Path(_logs, "access.txt"), "w") as _access_ref, open(
-                Path(_logs, "error.txt"), "w"
-            ) as _error_ref:
-                subprocess.Popen(
-                    ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
-                    # stdout=_access_ref,
-                    # stderr=_error_ref,
-                )
+            subprocess.Popen(["make", "-C", Path(self.__path, TERRA_DIRECTORY)])
         except KeyboardInterrupt:
             sys.exit()
 
