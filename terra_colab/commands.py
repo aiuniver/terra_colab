@@ -5,12 +5,13 @@ import getopt
 import requests
 
 from git import Repo
+from typing import Union
 from pathlib import Path
-
 from google.colab import drive as google_drive
 
 
 DEFAULT_ENV = "prod"
+ENV_FILE = ".env"
 
 TERRA_REPOSITORY = "https://github.com/aiuniver/terra_gui.git"
 EXTERNAL_SERVER_API = "http://%sterra.neural-university.ru/api/v1"
@@ -78,7 +79,11 @@ OPTIONS
     return output
 
 
-def _auth(env: str = None) -> bool:
+def _auth(path: Path, env: str = None, force: bool = False) -> Union[bool, dict]:
+    _env_file = Path(path, ENV_FILE)
+    if _env_file.is_file() and not force:
+        return True
+
     if env == DEFAULT_ENV:
         env = None
     _domain_prefix = f"{env}." if env else ""
@@ -100,7 +105,10 @@ def _auth(env: str = None) -> bool:
 
     print(data.get("data"))
 
-    return True
+    return {
+        "USER_EMAIL": _email,
+        "USER_TOKEN": _token,
+    }
 
 
 def _mount_google_drive(path: Path, force: bool = False) -> bool:
@@ -125,12 +133,11 @@ def web():
     _force = kwargs.get("force", False)
     _working_path = Path(os.path.abspath(os.getcwd()))
 
-    if not _auth(_env):
+    _auth_data = _auth(_working_path, _env, _force)
+    if not _auth_data:
         return
 
-    if not _mount_google_drive(
-        Path(_working_path, GOOGLE_DRIVE_DIRECTORY), force=_force
-    ):
+    if not _mount_google_drive(Path(_working_path, GOOGLE_DRIVE_DIRECTORY), _force):
         return
 
     repo_path = Path(_working_path, TERRA_DIRECTORY)
@@ -144,5 +151,8 @@ def web():
         except Exception as error:
             _print_error(str(error))
             sys.exit()
+
+    if isinstance(_auth_data, dict):
+        print("here")
 
     print("Complete")
