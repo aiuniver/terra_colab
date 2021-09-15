@@ -3,6 +3,7 @@ import sys
 import getopt
 
 from pathlib import Path
+from google.colab import drive as google_drive
 
 
 def _parse_argv(argv) -> dict:
@@ -24,7 +25,7 @@ OPTIONS
     -h, --help
             Показать эту документацию
     -b, --branch
-            Ветка в репозитории пользовательского истерфейса"""
+            Ветка в репозитории пользовательского интерфейса"""
         )
         sys.exit()
 
@@ -37,7 +38,7 @@ OPTIONS
 
 
 def _mount_google_drive(path: Path) -> bool:
-    print(path)
+    google_drive.mount(path)
     return False
 
 
