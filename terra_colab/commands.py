@@ -118,6 +118,13 @@ class WebServer:
 
         self.__auth()
 
+    def __str__(self):
+        return f"""[TerraAI WebServer]
+Env   : {self.__env}
+Branch: {self.__branch}
+Force : {self.__force}
+Path: {self.__path}"""
+
     def __auth(self):
         _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
         if _env_file.is_file() and not self.__force:
@@ -155,7 +162,7 @@ class WebServer:
 def web():
     kwargs = _parse_argv(sys.argv[1:])
     try:
-        WebServer(**kwargs)
+        print(WebServer(**kwargs))
     except WebServerException as error:
         _print_error(error)
 
