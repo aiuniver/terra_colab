@@ -109,6 +109,8 @@ class WebServer:
     __branch: Optional[str]
     __force: bool
     __path: Path
+    __email: str = ""
+    __token: str = ""
 
     def __init__(self, **kwargs):
         try:
@@ -135,13 +137,13 @@ class WebServer:
             return
 
         _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}."
-        _email = str(input(AUTH_EMAIL_LABEL))
-        _token = str(input(AUTH_TOKEN_LABEL))
+        self.__email = str(input(AUTH_EMAIL_LABEL))
+        self.__token = str(input(AUTH_TOKEN_LABEL))
 
         try:
             response = requests.post(
                 f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
-                json={"email": _email, "user_token": _token},
+                json={"email": self.__email, "user_token": self.__token},
             )
         except Exception as error:
             raise WebServerException(error)
@@ -156,6 +158,7 @@ class WebServer:
         if not data.get("success"):
             raise WebServerException(str(data.get("error")))
 
+        print(data.get("data", {}).keys())
         files = data.get("data", {}).get("create", {})
         for name, info in files.items():
             with open(Path(path, info.get("name")), "w") as file:
