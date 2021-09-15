@@ -123,7 +123,7 @@ class WebServer:
         if _env_file.is_file() and not self.__force:
             return
 
-        _domain_prefix = "" if self.__env == EnvChoice.prod else self.__env
+        _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}."
         _email = str(input(AUTH_EMAIL_LABEL))
         _token = str(input(AUTH_TOKEN_LABEL))
 
