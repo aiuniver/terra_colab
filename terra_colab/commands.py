@@ -65,8 +65,10 @@ OPTIONS
 
 
 def _auth() -> bool:
-    num1 = int(input())
-    print(num1)
+    _email = str(input("Введите E-mail: "))
+    _token = str(input("Введите Token: "))
+    print(_email)
+    print(_token)
     return False
 
 
