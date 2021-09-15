@@ -108,10 +108,8 @@ def _auth(path: Path, env: str = None, force: bool = False) -> Union[bool, dict]
         with open(info.get("name"), "w") as file:
             file.write(info.get("data"))
 
-    with open("/content/terra_gui/.terra-gui.env", "a") as file:
-        file.write(f'TERRA_GUI_URL={data.get("data").get("url")}\n')
-
     return {
+        "TERRA_GUI_URL": data.get("data", {}).get("url", ""),
         "USER_EMAIL": _email,
         "USER_TOKEN": _token,
     }
