@@ -130,8 +130,10 @@ Token  : {self.__token}"""
     def __auth(self):
         _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
         if _env_file.is_file() and not self.__force:
-            config = dotenv_values(str(_env_file.absolute()))
-            print(config)
+            _config = dotenv_values(str(_env_file.absolute()))
+            self.__url = _config.get("USER_URL", "")
+            self.__email = _config.get("USER_EMAIL", "")
+            self.__token = _config.get("USER_TOKEN", "")
             return
 
         _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}."
@@ -188,6 +190,11 @@ Token  : {self.__token}"""
         for name, info in self.__auth_data.get("create", {}).items():
             with open(Path(_terra_path, info.get("name")), "w") as _file_ref:
                 _file_ref.write(info.get("data"))
+
+        with open(Path(self.__path, TERRA_DIRECTORY, ENV_FILE), "a") as _env_file_ref:
+            _env_file_ref.write(f"USER_URL={self.__url}\n")
+            _env_file_ref.write(f"USER_EMAIL={self.__email}\n")
+            _env_file_ref.write(f"USER_TOKEN={self.__token}\n")
 
 
 def web():
