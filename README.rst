@@ -1,19 +1,25 @@
-# TerraAI Colab
+Запуск вользовательского интерфейса TerraAI
 
-`NAME`
-    `tc-web` - Запуск пользовательского интерфейса TerraAI в GoogleColab
+TerraAI Colab
+=============
 
-`SYNOPSIS`
-    `tc-web [OPTION]...`
+NAME
+----
+    ``tc-web`` - Запуск пользовательского интерфейса TerraAI в GoogleColab
 
-`OPTIONS`
-    `-h, --help`
+SYNOPSIS
+--------
+    ``tc-web [OPTION]...``
+
+OPTIONS
+-------
+    ``-h, --help``
             Показать эту документацию
-    `-e, --env`
+    ``-e, --env``
             Используемое окружение на удаленном сервере
-    `-b, --branch`
+    ``-b, --branch``
             Ветка в репозитории пользовательского интерфейса
-    `-f, --force`
+    ``-f, --force``
             Принудительные:
             - авторизация пользователя
             - монтирование GoogleDrive
