@@ -1,4 +1,5 @@
 import os
+import sys
 
 from pathlib import Path
 
@@ -8,9 +9,8 @@ def _mount_google_drive(path: Path) -> bool:
     return False
 
 
-def init(*args, **kwargs):
-    print(args)
-    print(kwargs)
+def init():
+    print(sys.argv)
     # print(Path().resolve())
     # print(os.path.abspath(os.getcwd()))
     if not _mount_google_drive(Path("/content/drive")):
