@@ -14,7 +14,7 @@ from google.colab import drive as google_drive
 ENV_FILE = ".env"
 
 TERRA_REPOSITORY = "https://github.com/aiuniver/terra_gui.git"
-EXTERNAL_SERVER_API = "http://%sterra.neural-university.ru/api/v1"
+EXTERNAL_SERVER_API = "%sterra.neural-university/api/v1"
 
 GOOGLE_DRIVE_DIRECTORY = "drive"
 TERRA_DIRECTORY = "terra"
@@ -138,10 +138,13 @@ class WebServer:
         _email = str(input(AUTH_EMAIL_LABEL))
         _token = str(input(AUTH_TOKEN_LABEL))
 
-        response = requests.post(
-            f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
-            json={"email": _email, "user_token": _token},
-        )
+        try:
+            response = requests.post(
+                f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
+                json={"email": _email, "user_token": _token},
+            )
+        except Exception as error:
+            raise WebServerException(error)
         if not response.ok:
             _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
             return False
