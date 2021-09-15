@@ -181,7 +181,7 @@ Token  : {self.__token}"""
             with open(Path(_terra_path, info.get("name")), "w") as _file_ref:
                 _file_ref.write(info.get("data"))
 
-        for name, info in self.__auth_data:
+        for name, info in self.__auth_data.items():
             print(name, info)
         # with open(Path(self.__path, TERRA_DIRECTORY, ENV_FILE), "a") as _env_file_ref:
         #     _env_file_ref.write(f'USER_EMAIL={data.get("data").get("url")}\n')
