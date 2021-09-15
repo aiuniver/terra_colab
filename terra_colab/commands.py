@@ -119,7 +119,6 @@ class WebServer:
         try:
             subprocess.Popen(
                 ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
-                stdin=subprocess.DEVNULL,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
