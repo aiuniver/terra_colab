@@ -13,6 +13,7 @@ setup(
     install_requires=[
         "requests~=2.23.0",
         "GitPython==3.1.18",
+        "python-dotenv==0.19.0",
     ],
     entry_points={
         "console_scripts": [

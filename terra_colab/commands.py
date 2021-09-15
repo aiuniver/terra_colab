@@ -6,6 +6,7 @@ import requests
 
 from git import Repo
 from enum import Enum
+from dotenv import dotenv_values
 from typing import Optional, List
 from pathlib import Path
 from google.colab import drive as google_drive
@@ -129,6 +130,8 @@ Token  : {self.__token}"""
     def __auth(self):
         _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
         if _env_file.is_file() and not self.__force:
+            config = dotenv_values(str(_env_file.absolute()))
+            print(config)
             return
 
         _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}."
