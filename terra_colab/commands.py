@@ -64,6 +64,12 @@ OPTIONS
     return output
 
 
+def _auth() -> bool:
+    num1 = int(input())
+    print(num1)
+    return False
+
+
 def _mount_google_drive(path: Path, force: bool = False) -> bool:
     """
     Подклчение GoogleDrive
@@ -84,6 +90,9 @@ def web():
     _branch = kwargs.get("branch")
     _force = kwargs.get("force", False)
     _working_path = Path(os.path.abspath(os.getcwd()))
+
+    if not _auth():
+        return
 
     if not _mount_google_drive(
         Path(_working_path, GOOGLE_DRIVE_DIRECTORY), force=_force
