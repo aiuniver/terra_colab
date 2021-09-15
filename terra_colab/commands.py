@@ -117,12 +117,12 @@ class WebServer:
             f"\033[1;32mДля начала работы перейдите по следующей ссылке {self.__url}\033[0m"
         )
         try:
-            _access_log = Path(self.__path, TERRA_DIRECTORY, "logs", "access.txt")
-            _error_log = Path(self.__path, TERRA_DIRECTORY, "logs", "error.txt")
+            _access_log = Path(self.__path, TERRA_DIRECTORY, "logs")
+            _error_log = Path(self.__path, TERRA_DIRECTORY, "logs")
             os.makedirs(_access_log, exist_ok=True)
             os.makedirs(_error_log, exist_ok=True)
-            with open(_access_log, "w") as _access_ref, open(
-                _error_log, "w"
+            with open(Path(_access_log, "access.txt"), "w") as _access_ref, open(
+                Path(_error_log, "error.txt"), "w"
             ) as _error_ref:
                 subprocess.Popen(
                     ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
