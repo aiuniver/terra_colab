@@ -14,6 +14,8 @@ setup(
         "requests~=2.23.0",
         "GitPython==3.1.18",
         "python-dotenv==0.19.0",
+        "tensorflow==2.6.0",
+        "Django==3.2.6",
     ],
     entry_points={
         "console_scripts": [
