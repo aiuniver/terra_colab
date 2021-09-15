@@ -12,7 +12,8 @@ def _parse_argv(argv):
     inputfile = ""
     outputfile = ""
     try:
-        opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile="])
+        opts, args = getopt.getopt(argv, "he:b:", ["env=", "branch="])
+        print("-------", opts, args)
     except getopt.GetoptError:
         print("test.py -i <inputfile> -o <outputfile>")
         sys.exit(2)
