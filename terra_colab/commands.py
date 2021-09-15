@@ -105,7 +105,7 @@ def _auth(path: Path, env: str = None, force: bool = False) -> Union[bool, dict]
 
     files = data.get("data", {}).get("create", {})
     for name, info in files.items():
-        with open(info.get("name"), "w") as file:
+        with open(Path(path, info.get("name")), "w") as file:
             file.write(info.get("data"))
 
     return {
