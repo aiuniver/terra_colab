@@ -150,7 +150,7 @@ class WebServer:
             print(dir(response))
             print(response.text)
             print(response.status_code)
-            print(response.raise_for_status)
+            print(response.raise_for_status())
             _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
             return False
 
