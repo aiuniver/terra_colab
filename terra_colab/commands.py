@@ -66,6 +66,6 @@ def web():
     repo = Repo.clone_from(
         "https://github.com/aiuniver/terra_gui.git",
         Path(working_path, "terra"),
-        env={"branch": kwargs.get("branch", "main")},
+        branch=kwargs.get("branch", "main"),
     )
     assert not repo.bare
