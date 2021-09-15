@@ -126,7 +126,6 @@ class WebServer:
                     ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
                     # stdout=_access_ref,
                     # stderr=_error_ref,
-                    shell=True,
                 )
         except KeyboardInterrupt:
             sys.exit()
