@@ -37,7 +37,9 @@ OPTIONS
     -h, --help
             Показать эту документацию
     -b, --branch
-            Ветка в репозитории пользовательского интерфейса"""
+            Ветка в репозитории пользовательского интерфейса
+    -f, --force
+            Чистый запуск"""
         )
         sys.exit()
 
@@ -54,12 +56,12 @@ OPTIONS
     return output
 
 
-def _mount_google_drive(path: Path) -> bool:
+def _mount_google_drive(path: Path, force: bool = False) -> bool:
     """
     Подклчение GoogleDrive
     """
     try:
-        google_drive.mount(str(path.absolute()))
+        google_drive.mount(str(path.absolute()), force_remount=force)
         return True
     except Exception as error:
         _print_error(str(error))
@@ -71,23 +73,28 @@ def web():
     Запуск пользовательского интерфейса в GoogleColab
     """
     kwargs = _parse_argv(sys.argv[1:])
-    working_path = Path(os.path.abspath(os.getcwd()))
+    _branch = kwargs.get("branch")
+    _force = kwargs.get("force", False)
+    _working_path = Path(os.path.abspath(os.getcwd()))
 
-    # if not _mount_google_drive(Path(working_path, "drive")):
+    # if not _mount_google_drive(
+    #     Path(working_path, "drive"), force=_force
+    # ):
     #     return
 
+    repo_path = Path(_working_path, "terra")
     repo_kwargs = {}
-    branch = kwargs.get("branch")
-    if branch:
-        repo_kwargs.update({"branch": branch})
-    try:
-        repo = Repo.clone_from(
-            "https://github.com/aiuniver/terra_gui.git",
-            Path(working_path, "terra"),
-            **repo_kwargs,
-        )
-    except Exception as error:
-        _print_error(str(error))
-        sys.exit()
+    if _branch:
+        repo_kwargs.update({"branch": _branch})
+    if not repo_path.is_dir() or _force:
+        try:
+            repo = Repo.clone_from(
+                "https://github.com/aiuniver/terra_gui.git",
+                repo_path,
+                **repo_kwargs,
+            )
+        except Exception as error:
+            _print_error(str(error))
+            sys.exit()
 
     print("sss")
