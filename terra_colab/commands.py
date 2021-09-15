@@ -85,7 +85,6 @@ def _auth(env: str = None) -> bool:
     _email = str(input(AUTH_EMAIL_LABEL))
     _token = str(input(AUTH_TOKEN_LABEL))
 
-    print(f"{EXTERNAL_SERVER_API % _domain_prefix}/login/")
     response = requests.post(
         f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
         json={"email": _email, "user_token": _token},
@@ -95,9 +94,13 @@ def _auth(env: str = None) -> bool:
         return False
 
     data = response.json()
-    print(data)
+    if not data.get("success"):
+        _print_error(str(data.get("error")))
+        return False
 
-    return False
+    print(data.get("data"))
+
+    return True
 
 
 def _mount_google_drive(path: Path, force: bool = False) -> bool:
