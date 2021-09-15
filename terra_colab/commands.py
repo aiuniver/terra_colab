@@ -37,16 +37,10 @@ class EnvChoice(str, Enum):
 
 
 def _print_error(message: str):
-    """
-    Вывод ошибки
-    """
     print(f"\033[1;31m{message}\033[0m")
 
 
 def _parse_argv(argv) -> dict:
-    """
-    Получение аргуметов командной строки
-    """
     opts = []
     try:
         opts, args = getopt.getopt(argv, "he:b:f", ["help", "env=", "branch=", "force"])
@@ -186,6 +180,11 @@ Token  : {self.__token}"""
         for name, info in self.__auth_data.get("create", {}).items():
             with open(Path(_terra_path, info.get("name")), "w") as _file_ref:
                 _file_ref.write(info.get("data"))
+
+        for name, info in self.__auth_data:
+            print(name, info)
+        # with open(Path(self.__path, TERRA_DIRECTORY, ENV_FILE), "a") as _env_file_ref:
+        #     _env_file_ref.write(f'USER_EMAIL={data.get("data").get("url")}\n')
 
 
 def web():
