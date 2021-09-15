@@ -148,6 +148,7 @@ class WebServer:
 
         if not response.ok:
             print(dir(response))
+            print(response.text)
             _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
             return False
 
