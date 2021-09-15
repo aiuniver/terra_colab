@@ -116,13 +116,14 @@ class WebServer:
         print(
             f"\033[1;32mДля начала работы перейдите по следующей ссылке {self.__url}\033[0m"
         )
-        proc = None
         try:
-            proc = subprocess.Popen(["make", "-C", Path(self.__path, TERRA_DIRECTORY)])
+            subprocess.Popen(
+                ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
         except KeyboardInterrupt:
-            if proc:
-                print(proc)
-                proc.terminate()
             sys.exit()
 
     def __str__(self):
