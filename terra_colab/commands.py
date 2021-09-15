@@ -7,6 +7,11 @@ from pathlib import Path
 from google.colab import drive as google_drive
 
 
+GOOGLE_DRIVE_DIRECTORY = "drive"
+TERRA_DIRECTORY = "terra"
+TERRA_REPOSITORY = "https://github.com/aiuniver/terra_gui.git"
+
+
 def _print_error(message: str):
     """
     Вывод ошибки
@@ -39,7 +44,10 @@ OPTIONS
     -b, --branch
             Ветка в репозитории пользовательского интерфейса
     -f, --force
-            Чистый запуск"""
+            Принудительные:
+            - авторизация пользователя
+            - монтирование GoogleDrive
+            - клонирование репозитория"""
         )
         sys.exit()
 
@@ -77,22 +85,18 @@ def web():
     _force = kwargs.get("force", False)
     _working_path = Path(os.path.abspath(os.getcwd()))
 
-    # if not _mount_google_drive(
-    #     Path(working_path, "drive"), force=_force
-    # ):
-    #     return
+    if not _mount_google_drive(
+        Path(_working_path, GOOGLE_DRIVE_DIRECTORY), force=_force
+    ):
+        return
 
-    repo_path = Path(_working_path, "terra")
+    repo_path = Path(_working_path, TERRA_DIRECTORY)
     repo_kwargs = {}
     if _branch:
         repo_kwargs.update({"branch": _branch})
     if not repo_path.is_dir() or _force:
         try:
-            repo = Repo.clone_from(
-                "https://github.com/aiuniver/terra_gui.git",
-                repo_path,
-                **repo_kwargs,
-            )
+            Repo.clone_from(TERRA_REPOSITORY, repo_path, **repo_kwargs)
         except Exception as error:
             _print_error(str(error))
             sys.exit()
