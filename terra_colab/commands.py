@@ -116,10 +116,10 @@ class WebServer:
         print(
             f"\033[1;32mДля начала работы перейдите по следующей ссылке {self.__url}\033[0m"
         )
-        with subprocess.Popen(
-            ["make", "-C", Path(self.__path, TERRA_DIRECTORY)]
-        ) as proc:
-            print(proc)
+        try:
+            subprocess.Popen(["make", "-C", Path(self.__path, TERRA_DIRECTORY)])
+        except KeyboardInterrupt:
+            sys.exit()
 
     def __str__(self):
         return f"""[TerraAI WebServer]
