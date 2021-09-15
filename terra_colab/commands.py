@@ -103,7 +103,13 @@ def _auth(path: Path, env: str = None, force: bool = False) -> Union[bool, dict]
         _print_error(str(data.get("error")))
         return False
 
-    print(data.get("data"))
+    files = data.get("data", {}).get("create", {})
+    for name, info in files.items():
+        with open(info.get("name"), "w") as file:
+            file.write(info.get("data"))
+
+    with open("/content/terra_gui/.terra-gui.env", "a") as file:
+        file.write(f'TERRA_GUI_URL={data.get("data").get("url")}\n')
 
     return {
         "USER_EMAIL": _email,
