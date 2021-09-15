@@ -147,12 +147,10 @@ class WebServer:
             raise WebServerException(error)
 
         if not response.ok:
-            print(dir(response))
-            print(response.text)
-            print(response.status_code)
-            print(response.raise_for_status())
-            _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
-            return False
+            try:
+                response.raise_for_status()
+            except requests.exceptions.HTTPError as error:
+                raise WebServerException(error)
 
         data = response.json()
         if not data.get("success"):
