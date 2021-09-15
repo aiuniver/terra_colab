@@ -38,8 +38,12 @@ OPTIONS
 
 
 def _mount_google_drive(path: Path) -> bool:
-    google_drive.mount(str(path.absolute()))
-    return False
+    try:
+        google_drive.mount(str(path.absolute()))
+        return True
+    except Exception as error:
+        print(f"\033[1;31m{error}\033[0m")
+        return False
 
 
 def web():
