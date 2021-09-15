@@ -1,42 +1,50 @@
 import os
 import sys
 import getopt
-import argparse
-
 
 from pathlib import Path
 
 
-def _parse_argv(argv):
-    print(argv)
-    inputfile = ""
-    outputfile = ""
+def _parse_argv(argv) -> dict:
+    opts = []
     try:
-        opts, args = getopt.getopt(argv, "he:b:", ["env=", "branch="])
-        print("-------", opts, args)
+        opts, args = getopt.getopt(argv, "hb:", ["help", "branch="])
     except getopt.GetoptError:
-        print("test.py -i <inputfile> -o <outputfile>")
-        sys.exit(2)
+        pass
+
+    if len(list(filter(lambda opt: opt[0] in ("-h", "--help"), opts))):
+        print(
+            """NAME
+    tc-web - Запуск пользовательского интерфейса TerraAI в GoogleColab
+
+SYNOPSIS
+    tc-web [OPTION]...
+
+OPTIONS
+    -h, --help
+            Показать эту документацию
+    -b, --branch
+            Ветка в репозитории пользовательского истерфейса"""
+        )
+        sys.exit()
+
+    output = {}
     for opt, arg in opts:
-        if opt == "-h":
-            print("test.py -i <inputfile> -o <outputfile>")
-            sys.exit()
-        elif opt in ("-i", "--ifile"):
-            inputfile = arg
-        elif opt in ("-o", "--ofile"):
-            outputfile = arg
-    print('Input file is "', inputfile)
-    print('Output file is "', outputfile)
+        if opt in ("-b", "--branch"):
+            output.update({"branch": arg})
+
+    return output
 
 
 def _mount_google_drive(path: Path) -> bool:
-    # print(path)
+    print(path)
     return False
 
 
-def init():
-    print(_parse_argv(sys.argv[1:]))
-    # print(Path().resolve())
-    # print(os.path.abspath(os.getcwd()))
-    if not _mount_google_drive(Path("/content/drive")):
+def web():
+    kwargs = _parse_argv(sys.argv[1:])
+    destination = Path(os.path.abspath(os.getcwd()))
+
+    # Подклчение GoogleDrive
+    if not _mount_google_drive(Path(destination, "drive")):
         return

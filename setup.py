@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 __version__ = "1.0"
 
@@ -13,7 +13,7 @@ setup(
     install_requires=[],
     entry_points={
         "console_scripts": [
-            "tc-init = terra_colab.commands:init",
+            "tc-web = terra_colab.commands:web",
         ]
     },
 )
