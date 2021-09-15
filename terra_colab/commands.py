@@ -6,7 +6,7 @@ import requests
 
 from git import Repo
 from enum import Enum
-from typing import Union, Optional
+from typing import Union, Optional, List
 from pathlib import Path
 from google.colab import drive as google_drive
 
@@ -31,9 +31,9 @@ class EnvChoice(str, Enum):
     prod = "prod"
     dev = "dev"
 
-
-class BranchChoice(str, Enum):
-    dev = "dev"
+    @staticmethod
+    def values() -> List[str]:
+        return list(map(lambda item: item.name, EnvChoice))
 
 
 def _print_error(message: str):
@@ -106,12 +106,17 @@ def _mount_google_drive(path: Path, force: bool = False) -> bool:
 
 class WebServer:
     __env: EnvChoice
-    __branch: Optional[BranchChoice]
+    __branch: Optional[str]
     __force: bool
     __path: Path
 
     def __init__(self, **kwargs):
-        self.__env = EnvChoice[kwargs.get("env", "prod")]
+        try:
+            self.__env = EnvChoice[kwargs.get("env", "prod")]
+        except KeyError:
+            raise WebServerException(
+                f"Неверное значение типа окружения: возможные варианты {EnvChoice.values()}"
+            )
         self.__branch = kwargs.get("branch")
         self.__force = kwargs.get("force", False)
         self.__path = Path(os.path.abspath(os.getcwd()))
