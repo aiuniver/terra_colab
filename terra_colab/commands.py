@@ -134,7 +134,7 @@ class WebServer:
         if _env_file.is_file() and not self.__force:
             return
 
-        _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}s."
+        _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}."
         _email = str(input(AUTH_EMAIL_LABEL))
         _token = str(input(AUTH_TOKEN_LABEL))
 
@@ -154,8 +154,7 @@ class WebServer:
 
         data = response.json()
         if not data.get("success"):
-            _print_error(str(data.get("error")))
-            return False
+            raise WebServerException(str(data.get("error")))
 
         files = data.get("data", {}).get("create", {})
         for name, info in files.items():
