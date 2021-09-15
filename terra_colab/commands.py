@@ -6,6 +6,7 @@ import requests
 
 from git import Repo
 from pathlib import Path
+
 from google.colab import drive as google_drive
 
 
@@ -93,8 +94,8 @@ def _auth(env: str = None) -> bool:
         _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
         return False
 
-    print(response.content)
-    print(response.json())
+    data = response.json()
+    print(data)
 
     return False
 
