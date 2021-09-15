@@ -60,8 +60,8 @@ def web():
     kwargs = _parse_argv(sys.argv[1:])
     working_path = Path(os.path.abspath(os.getcwd()))
 
-    if not _mount_google_drive(Path(working_path, "drive")):
-        return
+    # if not _mount_google_drive(Path(working_path, "drive")):
+    #     return
 
     repo = Repo.clone_from(
         "https://github.com/aiuniver/terra_gui.git",
