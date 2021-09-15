@@ -2,11 +2,15 @@ import os
 import sys
 import getopt
 
+from git import Repo
 from pathlib import Path
 from google.colab import drive as google_drive
 
 
 def _parse_argv(argv) -> dict:
+    """
+    Получение аргуметов командной строки
+    """
     opts = []
     try:
         opts, args = getopt.getopt(argv, "hb:", ["help", "branch="])
@@ -38,6 +42,9 @@ OPTIONS
 
 
 def _mount_google_drive(path: Path) -> bool:
+    """
+    Подклчение GoogleDrive
+    """
     try:
         google_drive.mount(str(path.absolute()))
         return True
@@ -47,9 +54,18 @@ def _mount_google_drive(path: Path) -> bool:
 
 
 def web():
+    """
+    Запуск пользовательского интерфейса в GoogleColab
+    """
     kwargs = _parse_argv(sys.argv[1:])
-    destination = Path(os.path.abspath(os.getcwd()))
+    working_path = Path(os.path.abspath(os.getcwd()))
 
-    # Подклчение GoogleDrive
-    if not _mount_google_drive(Path(destination, "drive")):
+    if not _mount_google_drive(Path(working_path, "drive")):
         return
+
+    repo = Repo.clone_from(
+        "https://github.com/aiuniver/terra_gui.git",
+        Path(working_path, "terra"),
+        env={"branch": kwargs.get("branch", "main")},
+    )
+    assert not repo.bare

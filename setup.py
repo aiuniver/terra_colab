@@ -10,7 +10,9 @@ setup(
     version=__version__,
     packages=find_packages(),
     long_description=open("README.rst").read(),
-    install_requires=[],
+    install_requires=[
+        "GitPython==3.1.18",
+    ],
     entry_points={
         "console_scripts": [
             "tc-web = terra_colab.commands:web",
