@@ -136,22 +136,22 @@ def web():
     _branch = kwargs.get("branch")
     _force = kwargs.get("force", False)
     _working_path = Path(os.path.abspath(os.getcwd()))
+    _terra_path = Path(_working_path, TERRA_DIRECTORY)
 
-    _auth_data = _auth(_working_path, _env, _force)
+    _auth_data = _auth(_terra_path, _env, _force)
     if not _auth_data:
         return
 
     if not _mount_google_drive(Path(_working_path, GOOGLE_DRIVE_DIRECTORY), _force):
         return
 
-    repo_path = Path(_working_path, TERRA_DIRECTORY)
     repo_kwargs = {}
     if _branch:
         repo_kwargs.update({"branch": _branch})
-    if not repo_path.is_dir() or _force:
-        shutil.rmtree(repo_path, ignore_errors=True)
+    if not _terra_path.is_dir() or _force:
+        shutil.rmtree(_terra_path, ignore_errors=True)
         try:
-            Repo.clone_from(TERRA_REPOSITORY, repo_path, **repo_kwargs)
+            Repo.clone_from(TERRA_REPOSITORY, _terra_path, **repo_kwargs)
         except Exception as error:
             _print_error(str(error))
             sys.exit()
