@@ -111,7 +111,7 @@ class WebServer:
     __path: Path
 
     def __init__(self, **kwargs):
-        self.__env = kwargs.get("env", EnvChoice.prod)
+        self.__env = EnvChoice[kwargs.get("env", "prod")]
         self.__branch = kwargs.get("branch")
         self.__force = kwargs.get("force", False)
         self.__path = Path(os.path.abspath(os.getcwd()))
@@ -120,10 +120,10 @@ class WebServer:
 
     def __str__(self):
         return f"""[TerraAI WebServer]
-Env   : {self.__env}
-Branch: {self.__branch}
-Force : {self.__force}
-Path: {self.__path}"""
+ Env    : {self.__env}
+ Branch : {self.__branch}
+ Force  : {self.__force}
+ Path   : {self.__path}"""
 
     def __auth(self):
         _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
