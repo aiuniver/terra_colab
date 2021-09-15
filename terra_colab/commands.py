@@ -132,6 +132,9 @@ def web():
     Запуск пользовательского интерфейса в GoogleColab
     """
     kwargs = _parse_argv(sys.argv[1:])
+    print(kwargs)
+    return
+    WebServer(**kwargs)
     _env = kwargs.get("env")
     _branch = kwargs.get("branch")
     _force = kwargs.get("force", False)
