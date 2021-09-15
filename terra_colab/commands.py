@@ -20,10 +20,11 @@ def _parse_argv(argv) -> dict:
     """
     opts = []
     try:
-        opts, args = getopt.getopt(argv, "hb:", ["help", "branch="])
+        opts, args = getopt.getopt(argv, "hb:f", ["help", "branch=", "force"])
     except getopt.GetoptError:
         pass
 
+    print(opts)
     if len(list(filter(lambda opt: opt[0] in ("-h", "--help"), opts))):
         print(
             """NAME
@@ -40,10 +41,15 @@ OPTIONS
         )
         sys.exit()
 
-    output = {}
+    output = {
+        "branch": None,
+        "force": False,
+    }
     for opt, arg in opts:
         if opt in ("-b", "--branch"):
             output.update({"branch": arg})
+        if opt in ("-f", "--force"):
+            output.update({"force": True})
 
     return output
 
@@ -82,3 +88,6 @@ def web():
         )
     except Exception as error:
         _print_error(str(error))
+        sys.exit()
+
+    print("sss")
