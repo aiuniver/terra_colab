@@ -115,6 +115,7 @@ class WebServer:
         self.__auth()
         self.__mount_google_drive()
         self.__download_gui()
+        self.__prepare_data()
 
     def __str__(self):
         return f"""[TerraAI WebServer]
@@ -159,13 +160,6 @@ Token  : {self.__token}"""
 
         self.__auth_data = data.get("data", {})
 
-        # for name, value in data.get("data", {}).items():
-        #     print(name, value)
-        # files = data.get("data", {}).get("create", {})
-        # for name, info in files.items():
-        #     with open(Path(path, info.get("name")), "w") as file:
-        #         file.write(info.get("data"))
-
     def __mount_google_drive(self):
         try:
             google_drive.mount(
@@ -187,6 +181,15 @@ Token  : {self.__token}"""
             except Exception as error:
                 raise WebServerException(error)
 
+    def __prepare_data(self):
+        print(self.__auth_data)
+        # for name, value in data.get("data", {}).items():
+        #     print(name, value)
+        # files = data.get("data", {}).get("create", {})
+        # for name, info in files.items():
+        #     with open(Path(path, info.get("name")), "w") as file:
+        #         file.write(info.get("data"))
+
 
 def web():
     kwargs = _parse_argv(sys.argv[1:])
@@ -194,3 +197,32 @@ def web():
         print(WebServer(**kwargs))
     except WebServerException as error:
         _print_error(error)
+
+    # _env = kwargs.get("env")
+    # _branch = kwargs.get("branch")
+    # _force = kwargs.get("force", False)
+    # _working_path = Path(os.path.abspath(os.getcwd()))
+    # _terra_path = Path(_working_path, TERRA_DIRECTORY)
+    #
+    # _auth_data = _auth(_terra_path, _env, _force)
+    # if not _auth_data:
+    #     return
+    #
+    # if not _mount_google_drive(Path(_working_path, GOOGLE_DRIVE_DIRECTORY), _force):
+    #     return
+    #
+    # repo_kwargs = {}
+    # if _branch:
+    #     repo_kwargs.update({"branch": _branch})
+    # if not _terra_path.is_dir() or _force:
+    #     shutil.rmtree(_terra_path, ignore_errors=True)
+    #     try:
+    #         Repo.clone_from(TERRA_REPOSITORY, _terra_path, **repo_kwargs)
+    #     except Exception as error:
+    #         _print_error(str(error))
+    #         sys.exit()
+    #
+    # if isinstance(_auth_data, dict):
+    #     print("here")
+    #
+    # print("Complete")
