@@ -2,15 +2,20 @@ import os
 import sys
 import shutil
 import getopt
+import requests
 
 from git import Repo
 from pathlib import Path
 from google.colab import drive as google_drive
 
 
+TERRA_REPOSITORY = "https://github.com/aiuniver/terra_gui.git"
+
 GOOGLE_DRIVE_DIRECTORY = "drive"
 TERRA_DIRECTORY = "terra"
-TERRA_REPOSITORY = "https://github.com/aiuniver/terra_gui.git"
+
+AUTH_EMAIL_LABEL = "Введите E-mail: "
+AUTH_TOKEN_LABEL = "Введите Token: "
 
 
 def _print_error(message: str):
@@ -65,10 +70,15 @@ OPTIONS
 
 
 def _auth() -> bool:
-    _email = str(input("Введите E-mail: "))
-    _token = str(input("Введите Token: "))
-    print(_email)
-    print(_token)
+    _email = str(input(AUTH_EMAIL_LABEL))
+    _token = str(input(AUTH_TOKEN_LABEL))
+    response = requests.post(
+        args.url, json={"email": args.email, "user_token": args.token}
+    )
+    if not response.ok:
+        print("Ошибка запроса авторизации! Попробуйте позже...")
+        return
+
     return False
 
 
@@ -113,4 +123,4 @@ def web():
             _print_error(str(error))
             sys.exit()
 
-    print("sss")
+    print("Complete")

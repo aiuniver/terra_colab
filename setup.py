@@ -11,6 +11,7 @@ setup(
     packages=find_packages(),
     long_description=open("README.rst").read(),
     install_requires=[
+        "requests==2.26.0",
         "GitPython==3.1.18",
     ],
     entry_points={
