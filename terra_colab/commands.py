@@ -6,7 +6,7 @@ import requests
 
 from git import Repo
 from enum import Enum
-from typing import Union, Optional, List
+from typing import Optional, List
 from pathlib import Path
 from google.colab import drive as google_drive
 
@@ -92,18 +92,6 @@ OPTIONS
     return output
 
 
-def _mount_google_drive(path: Path, force: bool = False) -> bool:
-    """
-    Подклчение GoogleDrive
-    """
-    try:
-        google_drive.mount(str(path.absolute()), force_remount=force)
-        return True
-    except Exception as error:
-        _print_error(str(error))
-        return False
-
-
 class WebServer:
     __env: EnvChoice
     __branch: Optional[str]
@@ -112,6 +100,7 @@ class WebServer:
     __url: str = ""
     __email: str = ""
     __token: str = ""
+    __auth_data: dict = {}
 
     def __init__(self, **kwargs):
         try:
@@ -124,16 +113,18 @@ class WebServer:
         self.__force = kwargs.get("force", False)
         self.__path = Path(os.path.abspath(os.getcwd()))
         self.__auth()
+        self.__mount_google_drive()
+        self.__download_gui()
 
     def __str__(self):
         return f"""[TerraAI WebServer]
- Env    : {self.__env}
- Branch : {self.__branch}
- Force  : {self.__force}
- Path   : {self.__path}
- URL    : {self.__url}
- Email  : {self.__email}
- Token  : {self.__token}"""
+Env    : {self.__env}
+Branch : {self.__branch}
+Force  : {self.__force}
+Path   : {self.__path}
+URL    : {self.__url}
+Email  : {self.__email}
+Token  : {self.__token}"""
 
     def __auth(self):
         _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
@@ -160,16 +151,41 @@ class WebServer:
 
         data = response.json()
         if not data.get("success"):
-            raise WebServerException(str(data.get("error")))
+            raise WebServerException(data.get("error"))
 
         self.__url = data.get("data", {}).get("url", "")
+        if not self.__url:
+            raise WebServerException("Undefined URL to GUI")
 
-        for name, value in data.get("data", {}).items():
-            print(name, value)
+        self.__auth_data = data.get("data", {})
+
+        # for name, value in data.get("data", {}).items():
+        #     print(name, value)
         # files = data.get("data", {}).get("create", {})
         # for name, info in files.items():
         #     with open(Path(path, info.get("name")), "w") as file:
         #         file.write(info.get("data"))
+
+    def __mount_google_drive(self):
+        try:
+            google_drive.mount(
+                str(Path(self.__path, GOOGLE_DRIVE_DIRECTORY).absolute()),
+                force_remount=self.__force,
+            )
+        except Exception as error:
+            raise WebServerException(error)
+
+    def __download_gui(self):
+        _terra_path = Path(self.__path, TERRA_DIRECTORY)
+        repo_kwargs = {}
+        if self.__branch:
+            repo_kwargs.update({"branch": self.__branch})
+        if not _terra_path.is_dir() or self.__force:
+            shutil.rmtree(_terra_path, ignore_errors=True)
+            try:
+                Repo.clone_from(TERRA_REPOSITORY, _terra_path, **repo_kwargs)
+            except Exception as error:
+                raise WebServerException(error)
 
 
 def web():
@@ -178,32 +194,3 @@ def web():
         print(WebServer(**kwargs))
     except WebServerException as error:
         _print_error(error)
-
-    # _env = kwargs.get("env")
-    # _branch = kwargs.get("branch")
-    # _force = kwargs.get("force", False)
-    # _working_path = Path(os.path.abspath(os.getcwd()))
-    # _terra_path = Path(_working_path, TERRA_DIRECTORY)
-    #
-    # _auth_data = _auth(_terra_path, _env, _force)
-    # if not _auth_data:
-    #     return
-    #
-    # if not _mount_google_drive(Path(_working_path, GOOGLE_DRIVE_DIRECTORY), _force):
-    #     return
-    #
-    # repo_kwargs = {}
-    # if _branch:
-    #     repo_kwargs.update({"branch": _branch})
-    # if not _terra_path.is_dir() or _force:
-    #     shutil.rmtree(_terra_path, ignore_errors=True)
-    #     try:
-    #         Repo.clone_from(TERRA_REPOSITORY, _terra_path, **repo_kwargs)
-    #     except Exception as error:
-    #         _print_error(str(error))
-    #         sys.exit()
-    #
-    # if isinstance(_auth_data, dict):
-    #     print("here")
-    #
-    # print("Complete")
