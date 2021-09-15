@@ -78,6 +78,8 @@ OPTIONS
 
 
 def _auth(env: str = None) -> bool:
+    if env == DEFAULT_ENV:
+        env = None
     _domain_prefix = f"{env}." if env else ""
     _email = str(input(AUTH_EMAIL_LABEL))
     _token = str(input(AUTH_TOKEN_LABEL))
@@ -112,11 +114,12 @@ def web():
     Запуск пользовательского интерфейса в GoogleColab
     """
     kwargs = _parse_argv(sys.argv[1:])
+    _env = kwargs.get("env")
     _branch = kwargs.get("branch")
     _force = kwargs.get("force", False)
     _working_path = Path(os.path.abspath(os.getcwd()))
 
-    if not _auth():
+    if not _auth(_env):
         return
 
     if not _mount_google_drive(
