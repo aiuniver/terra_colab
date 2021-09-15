@@ -23,6 +23,19 @@ AUTH_EMAIL_LABEL = "Введите E-mail: "
 AUTH_TOKEN_LABEL = "Введите Token: "
 
 
+class WebServerException(Exception):
+    pass
+
+
+class EnvChoice(str, Enum):
+    prod = "prod"
+    dev = "dev"
+
+
+class BranchChoice(str, Enum):
+    dev = "dev"
+
+
 def _print_error(message: str):
     """
     Вывод ошибки
@@ -64,7 +77,7 @@ OPTIONS
         sys.exit()
 
     output = {
-        "env": DEFAULT_ENV,
+        "env": EnvChoice.prod.value,
         "branch": None,
         "force": False,
     }
@@ -89,19 +102,6 @@ def _mount_google_drive(path: Path, force: bool = False) -> bool:
     except Exception as error:
         _print_error(str(error))
         return False
-
-
-class WebServerException(Exception):
-    pass
-
-
-class EnvChoice(str, Enum):
-    prod = "prod"
-    dev = "dev"
-
-
-class BranchChoice(str, Enum):
-    dev = "dev"
 
 
 class WebServer:
