@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 import getopt
 
 from git import Repo
@@ -29,7 +30,6 @@ def _parse_argv(argv) -> dict:
     except getopt.GetoptError:
         pass
 
-    print(opts)
     if len(list(filter(lambda opt: opt[0] in ("-h", "--help"), opts))):
         print(
             """NAME
@@ -95,6 +95,7 @@ def web():
     if _branch:
         repo_kwargs.update({"branch": _branch})
     if not repo_path.is_dir() or _force:
+        shutil.rmtree(repo_path, ignore_errors=True)
         try:
             Repo.clone_from(TERRA_REPOSITORY, repo_path, **repo_kwargs)
         except Exception as error:
