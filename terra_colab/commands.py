@@ -7,6 +7,13 @@ from pathlib import Path
 from google.colab import drive as google_drive
 
 
+def _print_error(message: str):
+    """
+    Вывод ошибки
+    """
+    print(f"\033[1;31m{message}\033[0m")
+
+
 def _parse_argv(argv) -> dict:
     """
     Получение аргуметов командной строки
@@ -49,7 +56,7 @@ def _mount_google_drive(path: Path) -> bool:
         google_drive.mount(str(path.absolute()))
         return True
     except Exception as error:
-        print(f"\033[1;31m{error}\033[0m")
+        _print_error(str(error))
         return False
 
 
@@ -67,9 +74,11 @@ def web():
     branch = kwargs.get("branch")
     if branch:
         repo_kwargs.update({"branch": branch})
-    repo = Repo.clone_from(
-        "https://github.com/aiuniver/terra_gui.git",
-        Path(working_path, "terra"),
-        **repo_kwargs,
-    )
-    assert not repo.bare
+    try:
+        repo = Repo.clone_from(
+            "https://github.com/aiuniver/terra_gui.git",
+            Path(working_path, "terra"),
+            **repo_kwargs,
+        )
+    except Exception as error:
+        _print_error(str(error))
