@@ -38,7 +38,7 @@ OPTIONS
 
 
 def _mount_google_drive(path: Path) -> bool:
-    google_drive.mount(path)
+    google_drive.mount(str(path.absolute()))
     return False
 
 
