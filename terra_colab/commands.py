@@ -5,12 +5,12 @@ import getopt
 import requests
 
 from git import Repo
-from typing import Union
+from enum import Enum
+from typing import Union, Optional
 from pathlib import Path
 from google.colab import drive as google_drive
 
 
-DEFAULT_ENV = "prod"
 ENV_FILE = ".env"
 
 TERRA_REPOSITORY = "https://github.com/aiuniver/terra_gui.git"
@@ -79,42 +79,6 @@ OPTIONS
     return output
 
 
-def _auth(path: Path, env: str = None, force: bool = False) -> Union[bool, dict]:
-    _env_file = Path(path, ENV_FILE)
-    if _env_file.is_file() and not force:
-        return True
-
-    if env == DEFAULT_ENV:
-        env = None
-    _domain_prefix = f"{env}." if env else ""
-    _email = str(input(AUTH_EMAIL_LABEL))
-    _token = str(input(AUTH_TOKEN_LABEL))
-
-    response = requests.post(
-        f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
-        json={"email": _email, "user_token": _token},
-    )
-    if not response.ok:
-        _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
-        return False
-
-    data = response.json()
-    if not data.get("success"):
-        _print_error(str(data.get("error")))
-        return False
-
-    files = data.get("data", {}).get("create", {})
-    for name, info in files.items():
-        with open(Path(path, info.get("name")), "w") as file:
-            file.write(info.get("data"))
-
-    return {
-        "TERRA_GUI_URL": data.get("data", {}).get("url", ""),
-        "USER_EMAIL": _email,
-        "USER_TOKEN": _token,
-    }
-
-
 def _mount_google_drive(path: Path, force: bool = False) -> bool:
     """
     Подклчение GoogleDrive
@@ -127,39 +91,99 @@ def _mount_google_drive(path: Path, force: bool = False) -> bool:
         return False
 
 
+class WebServerException(Exception):
+    pass
+
+
+class EnvChoice(str, Enum):
+    prod = "prod"
+    dev = "dev"
+
+
+class BranchChoice(str, Enum):
+    dev = "dev"
+
+
+class WebServer:
+    __env: EnvChoice
+    __branch: Optional[BranchChoice]
+    __force: bool
+    __path: Path
+
+    def __init__(self, **kwargs):
+        self.__env = kwargs.get("env", EnvChoice.prod)
+        self.__branch = kwargs.get("branch")
+        self.__force = kwargs.get("force", False)
+        self.__path = Path(os.path.abspath(os.getcwd()))
+
+        self.__auth()
+
+    def __auth(self):
+        _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
+        if _env_file.is_file() and not self.__force:
+            return
+
+        _domain_prefix = "" if self.__env == EnvChoice.prod else self.__env
+        _email = str(input(AUTH_EMAIL_LABEL))
+        _token = str(input(AUTH_TOKEN_LABEL))
+
+        response = requests.post(
+            f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
+            json={"email": _email, "user_token": _token},
+        )
+        if not response.ok:
+            _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
+            return False
+
+        data = response.json()
+        if not data.get("success"):
+            _print_error(str(data.get("error")))
+            return False
+
+        files = data.get("data", {}).get("create", {})
+        for name, info in files.items():
+            with open(Path(path, info.get("name")), "w") as file:
+                file.write(info.get("data"))
+
+        return {
+            "TERRA_GUI_URL": data.get("data", {}).get("url", ""),
+            "USER_EMAIL": _email,
+            "USER_TOKEN": _token,
+        }
+
+
 def web():
-    """
-    Запуск пользовательского интерфейса в GoogleColab
-    """
     kwargs = _parse_argv(sys.argv[1:])
-    print(kwargs)
-    return
-    WebServer(**kwargs)
-    _env = kwargs.get("env")
-    _branch = kwargs.get("branch")
-    _force = kwargs.get("force", False)
-    _working_path = Path(os.path.abspath(os.getcwd()))
-    _terra_path = Path(_working_path, TERRA_DIRECTORY)
+    try:
+        WebServer(**kwargs)
+    except WebServerException as error:
+        _print_error(error)
 
-    _auth_data = _auth(_terra_path, _env, _force)
-    if not _auth_data:
-        return
-
-    if not _mount_google_drive(Path(_working_path, GOOGLE_DRIVE_DIRECTORY), _force):
-        return
-
-    repo_kwargs = {}
-    if _branch:
-        repo_kwargs.update({"branch": _branch})
-    if not _terra_path.is_dir() or _force:
-        shutil.rmtree(_terra_path, ignore_errors=True)
-        try:
-            Repo.clone_from(TERRA_REPOSITORY, _terra_path, **repo_kwargs)
-        except Exception as error:
-            _print_error(str(error))
-            sys.exit()
-
-    if isinstance(_auth_data, dict):
-        print("here")
-
-    print("Complete")
+    # _env = kwargs.get("env")
+    # _branch = kwargs.get("branch")
+    # _force = kwargs.get("force", False)
+    # _working_path = Path(os.path.abspath(os.getcwd()))
+    # _terra_path = Path(_working_path, TERRA_DIRECTORY)
+    #
+    # _auth_data = _auth(_terra_path, _env, _force)
+    # if not _auth_data:
+    #     return
+    #
+    # if not _mount_google_drive(Path(_working_path, GOOGLE_DRIVE_DIRECTORY), _force):
+    #     return
+    #
+    # repo_kwargs = {}
+    # if _branch:
+    #     repo_kwargs.update({"branch": _branch})
+    # if not _terra_path.is_dir() or _force:
+    #     shutil.rmtree(_terra_path, ignore_errors=True)
+    #     try:
+    #         Repo.clone_from(TERRA_REPOSITORY, _terra_path, **repo_kwargs)
+    #     except Exception as error:
+    #         _print_error(str(error))
+    #         sys.exit()
+    #
+    # if isinstance(_auth_data, dict):
+    #     print("here")
+    #
+    # print("Complete")
