@@ -119,8 +119,8 @@ class WebServer:
         try:
             subprocess.Popen(
                 ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
             )
         except KeyboardInterrupt:
             sys.exit()
