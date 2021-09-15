@@ -63,9 +63,13 @@ def web():
     # if not _mount_google_drive(Path(working_path, "drive")):
     #     return
 
+    repo_kwargs = {}
+    branch = kwargs.get("branch")
+    if branch:
+        repo_kwargs.update({"branch": branch})
     repo = Repo.clone_from(
         "https://github.com/aiuniver/terra_gui.git",
         Path(working_path, "terra"),
-        branch=kwargs.get("branch", "main"),
+        **repo_kwargs,
     )
     assert not repo.bare
