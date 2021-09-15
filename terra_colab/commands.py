@@ -124,9 +124,9 @@ class WebServer:
             ) as _error_ref:
                 subprocess.Popen(
                     ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
-                    stdout=_access_ref,
-                    stderr=_error_ref,
-                    shell=False,
+                    # stdout=_access_ref,
+                    # stderr=_error_ref,
+                    shell=True,
                 )
         except KeyboardInterrupt:
             sys.exit()
