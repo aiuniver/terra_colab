@@ -111,6 +111,11 @@ class WebServer:
         self.__download_gui()
         self.__prepare_data()
 
+        print(
+            f"\033[1;32mДля начала работы перейдите по следующей ссылке {self.__url}\033[0m"
+        )
+        # make
+
     def __str__(self):
         return f"""[TerraAI WebServer]
 Env    : {self.__env}
