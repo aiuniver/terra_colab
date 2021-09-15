@@ -117,11 +117,12 @@ class WebServer:
             f"\033[1;32mДля начала работы перейдите по следующей ссылке {self.__url}\033[0m"
         )
         try:
-            subprocess.Popen(
-                ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
+            with open(Path(self.__path, TERRA_DIRECTORY, "log.txt"), "w") as _log_ref:
+                subprocess.Popen(
+                    ["make", "-C", Path(self.__path, TERRA_DIRECTORY)],
+                    stdout=_log_ref,
+                    stderr=_log_ref,
+                )
         except KeyboardInterrupt:
             sys.exit()
 
