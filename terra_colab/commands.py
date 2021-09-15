@@ -83,16 +83,18 @@ def _auth(env: str = None) -> bool:
     _domain_prefix = f"{env}." if env else ""
     _email = str(input(AUTH_EMAIL_LABEL))
     _token = str(input(AUTH_TOKEN_LABEL))
+
     print(f"{EXTERNAL_SERVER_API % _domain_prefix}/login/")
     response = requests.post(
         f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
         json={"email": _email, "user_token": _token},
     )
-    print(response.content)
-    print(response.json())
     if not response.ok:
         _print_error("Ошибка запроса авторизации! Попробуйте позже...")
-        return
+        return False
+
+    print(response.content)
+    print(response.json())
 
     return False
 
