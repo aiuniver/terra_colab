@@ -90,7 +90,7 @@ def _auth(env: str = None) -> bool:
         json={"email": _email, "user_token": _token},
     )
     if not response.ok:
-        _print_error("Ошибка запроса авторизации! Попробуйте позже...")
+        _print_error("Внутренняя ошибка сервера! Попробуйте позже...")
         return False
 
     print(response.content)
