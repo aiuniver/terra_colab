@@ -158,17 +158,12 @@ class WebServer:
         if not data.get("success"):
             raise WebServerException(str(data.get("error")))
 
-        print(data.get("data", {}).keys())
-        files = data.get("data", {}).get("create", {})
-        for name, info in files.items():
-            with open(Path(path, info.get("name")), "w") as file:
-                file.write(info.get("data"))
-
-        return {
-            "TERRA_GUI_URL": data.get("data", {}).get("url", ""),
-            "USER_EMAIL": _email,
-            "USER_TOKEN": _token,
-        }
+        for name, value in data.get("data", {}).items():
+            print(name, value)
+        # files = data.get("data", {}).get("create", {})
+        # for name, info in files.items():
+        #     with open(Path(path, info.get("name")), "w") as file:
+        #         file.write(info.get("data"))
 
 
 def web():
