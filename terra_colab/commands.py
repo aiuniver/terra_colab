@@ -133,18 +133,18 @@ Token  : {self.__token}"""
 
     def __auth(self):
         _env_file = Path(self.__path, TERRA_DIRECTORY, ENV_FILE)
-        if _env_file.is_file() and not self.__force:
+        if _env_file.is_file():
             _config = dotenv_values(str(_env_file.absolute()))
             self.__url = _config.get("USER_URL", "")
             self.__email = _config.get("USER_EMAIL", "")
             self.__token = _config.get("USER_TOKEN", "")
-            return
 
-        _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}."
-        self.__email = str(input(AUTH_EMAIL_LABEL))
-        self.__token = str(input(AUTH_TOKEN_LABEL))
+        if not self.__email or not self.__token:
+            self.__email = str(input(AUTH_EMAIL_LABEL))
+            self.__token = str(input(AUTH_TOKEN_LABEL))
 
         try:
+            _domain_prefix = "" if self.__env == EnvChoice.prod else f"{self.__env}."
             response = requests.post(
                 f"{EXTERNAL_SERVER_API % _domain_prefix}/login/",
                 json={"email": self.__email, "user_token": self.__token},
