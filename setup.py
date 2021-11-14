@@ -17,6 +17,7 @@ setup(
         "tensorflow==2.7.0",
         "keras==2.7.0",
         "Django==3.2.6",
+        "psutil==5.8.0",
     ],
     entry_points={
         "console_scripts": [
