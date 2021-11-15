@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = "1.3"
+__version__ = "1.4"
 
 from setuptools import setup, find_packages
 
