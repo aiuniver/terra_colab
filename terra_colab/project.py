@@ -1,7 +1,7 @@
 import os
 import importlib.util
 
-from typing import Dict
+from typing import Dict, Optional
 
 from tensorflow.keras.models import Model, load_model
 from tensorflow.python.keras.engine.functional import Functional
@@ -13,7 +13,7 @@ TERRA_AI_PATH = "/content/drive/MyDrive/TerraAI"
 class TerraProject:
     name: str
     h5: Dict[str, Functional]
-    model: Model
+    model: Optional[Model]
 
     def __init__(self, name: str):
         self.name = name
