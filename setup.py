@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = "1.4"
+__version__ = "1.5"
 
 from setuptools import setup, find_packages
 
@@ -11,17 +11,9 @@ setup(
     packages=find_packages(),
     long_description=open("README.rst").read(),
     install_requires=[
-        "requests~=2.23.0",
-        "GitPython==3.1.18",
-        "python-dotenv==0.19.0",
         "tensorflow==2.7.0",
-        "keras==2.7.0",
-        "Django==3.2.6",
-        "psutil==5.8.0",
+        "GitPython==3.1.24",
+        "python-dotenv==0.19.2",
+        "numpy==1.19.5",
     ],
-    entry_points={
-        "console_scripts": [
-            "tc-web = terra_colab.commands:web",
-        ]
-    },
 )
